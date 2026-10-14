@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import * as z from "zod/mini";
+import { optionalEnum, searchSchema } from "../../../modules/data/search-params";
 import { useTranslation } from "react-i18next";
 import { ScreenPlaceholder } from "../../../modules/screens/ScreenPlaceholder";
 
-const search = z.object({ type: z.catch(z.optional(z.enum(["hosted"])), undefined) });
+const search = searchSchema({ type: optionalEnum("hosted") });
 
 /** MC-02, or MC-17 when ?type=hosted. */
 export const Route = createFileRoute("/app/servers/new")({

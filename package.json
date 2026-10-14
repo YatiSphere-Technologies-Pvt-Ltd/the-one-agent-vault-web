@@ -21,8 +21,9 @@
     "storybook": "pnpm tokens && pnpm --filter @agentvault/ui storybook",
     "build-storybook": "pnpm --filter @agentvault/ui build-storybook",
     "test:e2e": "pnpm build && pnpm build-storybook && playwright test -c e2e/playwright.config.ts",
-    "verify": "pnpm tokens && pnpm check-classes && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm budgets",
-    "format": "prettier --write ."
+    "verify": "pnpm tokens && pnpm check-classes && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm check-routes && pnpm budgets",
+    "format": "prettier --write .",
+    "check-routes": "node scripts/check-routes.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

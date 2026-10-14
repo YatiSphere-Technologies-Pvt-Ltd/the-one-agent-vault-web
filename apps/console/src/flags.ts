@@ -12,6 +12,10 @@ export interface Flags {
   R3: boolean;
 }
 
+// Dev and demo (mock API) builds show every release so all screens can be reviewed;
+// real production builds start with R2 and R3 off.
+const DEFAULT_ON = import.meta.env.DEV || import.meta.env.VITE_MOCK_API === "true";
+
 const listeners = new Set<() => void>();
 let cache: Flags | null = null;
 
@@ -19,9 +23,9 @@ function read(): Flags {
   if (cache) return cache;
   try {
     const parsed = JSON.parse(storage.get(FLAGS_KEY) ?? "{}") as Partial<Flags>;
-    cache = { R2: parsed.R2 === true, R3: parsed.R3 === true };
+    cache = { R2: parsed.R2 ?? DEFAULT_ON, R3: parsed.R3 ?? DEFAULT_ON };
   } catch {
-    cache = { R2: false, R3: false };
+    cache = { R2: DEFAULT_ON, R3: DEFAULT_ON };
   }
   return cache;
 }

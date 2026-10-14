@@ -12,6 +12,7 @@ import {
   servers,
   skills,
 } from "./db";
+import { authHandlers } from "./auth";
 import { readScenario } from "./scenario";
 
 // Development mocks for the API in packages/api-client/openapi.yaml. List endpoints implement
@@ -79,6 +80,7 @@ const summary = (s: (typeof servers)[number]): Schemas["Server"] => {
 };
 
 export const handlers = [
+  ...authHandlers,
   http.get("/api/licence", () => HttpResponse.json<Schemas["Licence"]>({ plan: "Enterprise", releases: ["R1"] })),
   http.get("/api/me", () =>
     HttpResponse.json<Schemas["Me"]>({

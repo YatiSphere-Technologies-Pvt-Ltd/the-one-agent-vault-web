@@ -6,6 +6,7 @@ import { Combobox } from "./combobox";
 import { Field } from "./field";
 import { Input } from "./input";
 import { Label } from "./label";
+import { PasswordInput } from "./password-input";
 import { RadioGroup, RadioGroupItem } from "./radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Switch } from "./switch";
@@ -86,5 +87,16 @@ export const BothThemesControls: Story = {
     <BothThemes>
       <Controls />
     </BothThemes>
+  ),
+};
+
+export const Password: Story = {
+  name: "Password input",
+  render: () => (
+    <div className="max-w-(--av-size-dialog)">
+      <Field label="Password" help="At least 12 characters.">
+        <PasswordInput autoComplete="current-password" />
+      </Field>
+    </div>
   ),
 };

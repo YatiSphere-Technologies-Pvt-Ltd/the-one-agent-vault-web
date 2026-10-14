@@ -4,9 +4,10 @@ import { RouteTabs, type RouteTab } from "@agentvault/ui";
 import { isReleased, useFlags } from "../../flags";
 import { screenById, type ScreenId } from "../../screens";
 
-type Section = "servers" | "skills" | "activity" | "discovery" | "settings";
+export type Section = "servers" | "skills" | "activity" | "discovery" | "settings";
 
-const sections: Record<Section, { id: ScreenId; to: LinkProps["to"] }[]> = {
+/** Pages of each console area, in order. Shared by the section tabs and the sidebar. */
+export const sections: Record<Section, { id: ScreenId; to: LinkProps["to"] }[]> = {
   servers: [
     { id: "MC-01", to: "/app/servers" },
     { id: "MC-09", to: "/app/virtual-servers" },

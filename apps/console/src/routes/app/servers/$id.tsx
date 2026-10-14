@@ -1,12 +1,12 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import * as z from "zod/mini";
+import { optionalOne, searchSchema } from "../../../modules/data/search-params";
 import { useTranslation } from "react-i18next";
 import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, PageHeader, RouteTabs, type RouteTab } from "@agentvault/ui";
 import { NotBuilt, ScreenMeta } from "../../../modules/screens/ScreenPlaceholder";
 import { useServer } from "../../../modules/data/api";
 import { useActiveScreenId } from "../../../modules/screens/useActiveScreenId";
 
-const search = z.object({ killswitch: z.catch(z.optional(z.literal(1)), undefined) });
+const search = searchSchema({ killswitch: optionalOne });
 
 /** Object layout: header, tabs (the tab lives in the URL), then the active tab's route. MC-16 kill switch is a modal on ?killswitch=1. */
 export const Route = createFileRoute("/app/servers/$id")({

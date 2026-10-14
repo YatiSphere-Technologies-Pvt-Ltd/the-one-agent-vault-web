@@ -10,6 +10,7 @@ import {
   FileSearch,
   Gauge,
   House,
+  LayoutGrid,
   KeyRound,
   Layers,
   ListChecks,
@@ -30,6 +31,7 @@ import {
 
 export const icons = {
   home: House,
+  portal: LayoutGrid,
   servers: Server,
   virtualServers: Layers,
   skills: BookOpen,
@@ -57,3 +59,5 @@ export const icons = {
 
 export type IconConcept = keyof typeof icons;
 export type { LucideIcon };
+
+export { GoogleMark, identityProviderMarks, MicrosoftMark, OktaMark } from "./brands";

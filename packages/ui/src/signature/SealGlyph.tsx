@@ -88,7 +88,7 @@ export function SealGlyph({ hash, state, size, label, decorative = false, classN
       {g.showCore && state === "intact" && (
         <>
           <circle cx={C.x} cy={C.y} r={g.coreRadius} fill="var(--av-seal-core-intact)" stroke={ring} strokeWidth={1.5} />
-          <path d="M30 36l4 4 8-9" stroke={ring} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
+          <path data-part="check" pathLength={1} d="M30 36l4 4 8-9" stroke={ring} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
         </>
       )}
       {g.showCore && state === "broken" && (

@@ -44,3 +44,35 @@
     }
   }
 }
+
+/* ---- Seal motion (one-time; the motion tokens are 0 ms with reduced motion) -------------------- */
+@keyframes av-seal-ring-in {
+  from { opacity: 0; rotate: -24deg; }
+  to { opacity: 1; rotate: 0deg; }
+}
+@keyframes av-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes av-rise {
+  from { opacity: 0; translate: 0 6px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@layer components {
+  /* Draw a SealGlyph in: the seal turns into place, then the check draws. */
+  /* Animate the whole seal: setting transform-origin on the ring itself would shift its
+     built-in rotate(… 36 36) and draw it off-centre. */
+  .av-seal-draw {
+    animation: av-seal-ring-in calc(var(--av-motion-slow) * 4) var(--av-motion-ease-standard) both;
+  }
+  .av-seal-draw [data-part="check"] {
+    stroke-dasharray: 1;
+    animation: av-draw calc(var(--av-motion-slow) * 2) var(--av-motion-ease-standard) both;
+    animation-delay: calc(var(--av-motion-slow) * 3);
+  }
+  /* Staggered entrance for short lists: set --i on each item. */
+  .av-rise {
+    animation: av-rise calc(var(--av-motion-slow) * 2) var(--av-motion-ease-standard) both;
+    animation-delay: calc(var(--i, 0) * var(--av-motion-slow));
+  }
+}

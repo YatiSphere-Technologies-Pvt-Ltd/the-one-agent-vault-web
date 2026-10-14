@@ -1,1 +1,4 @@
 @import "@agentvault/ui/styles.css";
+
+/* Short viewports (laptops with browser chrome): tighten tall, decorative layouts. */
+@custom-variant short (@media (max-height: 820px));

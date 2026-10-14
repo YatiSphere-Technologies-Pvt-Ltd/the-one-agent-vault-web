@@ -1,4 +1,4 @@
-# Generated from a script during setup; edit by hand from now on.
+# AgentVault API contract (stub). Edit by hand; client types are generated from it.
 openapi: 3.1.0
 info:
   title: AgentVault API (stub)
@@ -328,6 +328,105 @@ paths:
       parameters:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/pageSize'
+  /api/auth/providers:
+    get:
+      operationId: getAuthProviders
+      responses:
+        '200':
+          description: Sign-in methods configured for this installation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthProviders'
+        default: &id007
+          $ref: '#/components/responses/Error'
+  /api/auth/login:
+    post:
+      operationId: login
+      responses:
+        '200':
+          description: Signed in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '401': *id007
+        '423': *id007
+        default: *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+  /api/auth/sso/start:
+    post:
+      operationId: startSso
+      responses:
+        '200':
+          description: Where to redirect for single sign-on
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoStart'
+        '404': *id007
+        default: *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SsoStartRequest'
+  /api/auth/sso/callback:
+    post:
+      operationId: completeSso
+      responses:
+        '200':
+          description: Signed in through single sign-on
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400': *id007
+        default: *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SsoCallbackRequest'
+  /api/auth/session:
+    get:
+      operationId: getSession
+      responses:
+        '200':
+          description: Current session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '401': *id007
+        default: *id007
+  /api/auth/logout:
+    post:
+      operationId: logout
+      responses:
+        '204':
+          description: Signed out
+        default: *id007
+  /api/auth/password-reset:
+    post:
+      operationId: requestPasswordReset
+      responses:
+        '202':
+          description: Accepted; the response never reveals whether the account exists
+        default: *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
 components:
   schemas:
     Status:
@@ -1289,6 +1388,118 @@ components:
         detail:
           type: string
         requestId:
+          type: string
+    AuthProvider:
+      type: object
+      required:
+      - id
+      - name
+      - kind
+      properties:
+        id:
+          type: string
+          enum:
+          - entra
+          - okta
+          - google
+          - saml
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - oidc
+          - saml
+    AuthProviders:
+      type: object
+      required:
+      - providers
+      - passwordEnabled
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthProvider'
+        passwordEnabled:
+          type: boolean
+    LoginRequest:
+      type: object
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        remember:
+          type: boolean
+    Session:
+      type: object
+      required:
+      - user
+      - method
+      - expiresAt
+      properties:
+        user:
+          $ref: '#/components/schemas/Me'
+        method:
+          type: string
+          enum:
+          - password
+          - sso
+        provider:
+          type:
+          - string
+          - 'null'
+        expiresAt:
+          type: string
+          format: date-time
+    SsoStartRequest:
+      type: object
+      description: Either a provider id (button) or a work email (home-realm discovery).
+      properties:
+        provider:
+          type: string
+          enum:
+          - entra
+          - okta
+          - google
+          - saml
+        email:
+          type: string
+        redirect:
+          type: string
+    SsoStart:
+      type: object
+      required:
+      - authorizeUrl
+      - state
+      properties:
+        authorizeUrl:
+          type: string
+          description: Where to send the browser (the identity provider).
+        state:
+          type: string
+          description: CSRF state echoed back on the callback.
+        providerName:
+          type: string
+    SsoCallbackRequest:
+      type: object
+      required:
+      - code
+      - state
+      properties:
+        code:
+          type: string
+        state:
+          type: string
+    PasswordResetRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
           type: string
   parameters:
     page:

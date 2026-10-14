@@ -1,15 +1,21 @@
-import * as z from "zod/mini";
+import { optionalPositiveInt, optionalString, searchSchema } from "./search-params";
 import type { SortingState } from "@agentvault/ui";
 
 /** URL search params shared by every list screen: ?page=2&q=crm&sort=risk:desc&status=approved */
-export const listSearchSchema = z.object({
-  page: z.catch(z.optional(z.int().check(z.positive())), undefined),
-  q: z.catch(z.optional(z.string()), undefined),
-  sort: z.catch(z.optional(z.string()), undefined),
-  status: z.catch(z.optional(z.string()), undefined),
-});
+export const listSearchShape = {
+  page: optionalPositiveInt,
+  q: optionalString,
+  sort: optionalString,
+  status: optionalString,
+};
+export const listSearchSchema = searchSchema(listSearchShape);
 
-export type ListSearch = z.infer<typeof listSearchSchema>;
+export type ListSearch = {
+  page?: number | undefined;
+  q?: string | undefined;
+  sort?: string | undefined;
+  status?: string | undefined;
+};
 
 export function toSorting(sort: string | undefined): SortingState {
   if (!sort) return [];

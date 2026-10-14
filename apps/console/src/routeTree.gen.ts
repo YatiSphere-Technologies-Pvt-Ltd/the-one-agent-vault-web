@@ -24,6 +24,10 @@ import { Route as AppPostureRouteImport } from "./routes/app/posture"
 import { Route as AppSetupRouteImport } from "./routes/app/setup"
 import { Route as AppSkillPacksRouteImport } from "./routes/app/skill-packs"
 import { Route as AppVirtualServersRouteImport } from "./routes/app/virtual-servers"
+import { Route as LoginIndexRouteImport } from "./routes/login/index"
+import { Route as LoginCallbackRouteImport } from "./routes/login/callback"
+import { Route as LoginResetRouteImport } from "./routes/login/reset"
+import { Route as LoginSsoRouteImport } from "./routes/login/sso"
 import { Route as PortalIndexRouteImport } from "./routes/portal/index"
 import { Route as PortalMeRouteImport } from "./routes/portal/me"
 import { Route as PortalSetupRouteImport } from "./routes/portal/setup"
@@ -143,6 +147,26 @@ const AppVirtualServersRoute = AppVirtualServersRouteImport.update({
   id: "/virtual-servers",
   path: "/virtual-servers",
   getParentRoute: () => AppRoute,
+} as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginCallbackRoute = LoginCallbackRouteImport.update({
+  id: "/callback",
+  path: "/callback",
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginResetRoute = LoginResetRouteImport.update({
+  id: "/reset",
+  path: "/reset",
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginSsoRoute = LoginSsoRouteImport.update({
+  id: "/sso",
+  path: "/sso",
+  getParentRoute: () => LoginRoute,
 } as any)
 const PortalIndexRoute = PortalIndexRouteImport.update({
   id: "/",
@@ -368,7 +392,7 @@ const AppSkillsIdVersionsRoute = AppSkillsIdVersionsRouteImport.update({
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/app": typeof AppRouteWithChildren
-  "/login": typeof LoginRoute
+  "/login": typeof LoginRouteWithChildren
   "/portal": typeof PortalRouteWithChildren
   "/app/_reference": typeof AppReferenceRoute
   "/app/audit": typeof AppAuditRoute
@@ -380,9 +404,13 @@ export interface FileRoutesByFullPath {
   "/app/setup": typeof AppSetupRoute
   "/app/skill-packs": typeof AppSkillPacksRoute
   "/app/virtual-servers": typeof AppVirtualServersRoute
+  "/login/callback": typeof LoginCallbackRoute
+  "/login/reset": typeof LoginResetRoute
+  "/login/sso": typeof LoginSsoRoute
   "/portal/me": typeof PortalMeRoute
   "/portal/setup": typeof PortalSetupRoute
   "/app/": typeof AppIndexRoute
+  "/login/": typeof LoginIndexRoute
   "/portal/": typeof PortalIndexRoute
   "/app/activity/calls": typeof AppActivityCallsRoute
   "/app/approvals/$id": typeof AppApprovalsIdRoute
@@ -428,7 +456,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
-  "/login": typeof LoginRoute
   "/app/_reference": typeof AppReferenceRoute
   "/app/audit": typeof AppAuditRoute
   "/app/endpoints": typeof AppEndpointsRoute
@@ -439,9 +466,13 @@ export interface FileRoutesByTo {
   "/app/setup": typeof AppSetupRoute
   "/app/skill-packs": typeof AppSkillPacksRoute
   "/app/virtual-servers": typeof AppVirtualServersRoute
+  "/login/callback": typeof LoginCallbackRoute
+  "/login/reset": typeof LoginResetRoute
+  "/login/sso": typeof LoginSsoRoute
   "/portal/me": typeof PortalMeRoute
   "/portal/setup": typeof PortalSetupRoute
   "/app": typeof AppIndexRoute
+  "/login": typeof LoginIndexRoute
   "/portal": typeof PortalIndexRoute
   "/app/activity/calls": typeof AppActivityCallsRoute
   "/app/approvals/$id": typeof AppApprovalsIdRoute
@@ -487,7 +518,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/": typeof IndexRoute
   "/app": typeof AppRouteWithChildren
-  "/login": typeof LoginRoute
+  "/login": typeof LoginRouteWithChildren
   "/portal": typeof PortalRouteWithChildren
   "/app/_reference": typeof AppReferenceRoute
   "/app/audit": typeof AppAuditRoute
@@ -499,9 +530,13 @@ export interface FileRoutesById {
   "/app/setup": typeof AppSetupRoute
   "/app/skill-packs": typeof AppSkillPacksRoute
   "/app/virtual-servers": typeof AppVirtualServersRoute
+  "/login/callback": typeof LoginCallbackRoute
+  "/login/reset": typeof LoginResetRoute
+  "/login/sso": typeof LoginSsoRoute
   "/portal/me": typeof PortalMeRoute
   "/portal/setup": typeof PortalSetupRoute
   "/app/": typeof AppIndexRoute
+  "/login/": typeof LoginIndexRoute
   "/portal/": typeof PortalIndexRoute
   "/app/activity/calls": typeof AppActivityCallsRoute
   "/app/approvals/$id": typeof AppApprovalsIdRoute
@@ -562,9 +597,13 @@ export interface FileRouteTypes {
     | "/app/setup"
     | "/app/skill-packs"
     | "/app/virtual-servers"
+    | "/login/callback"
+    | "/login/reset"
+    | "/login/sso"
     | "/portal/me"
     | "/portal/setup"
     | "/app/"
+    | "/login/"
     | "/portal/"
     | "/app/activity/calls"
     | "/app/approvals/$id"
@@ -610,7 +649,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | "/"
-    | "/login"
     | "/app/_reference"
     | "/app/audit"
     | "/app/endpoints"
@@ -621,9 +659,13 @@ export interface FileRouteTypes {
     | "/app/setup"
     | "/app/skill-packs"
     | "/app/virtual-servers"
+    | "/login/callback"
+    | "/login/reset"
+    | "/login/sso"
     | "/portal/me"
     | "/portal/setup"
     | "/app"
+    | "/login"
     | "/portal"
     | "/app/activity/calls"
     | "/app/approvals/$id"
@@ -680,9 +722,13 @@ export interface FileRouteTypes {
     | "/app/setup"
     | "/app/skill-packs"
     | "/app/virtual-servers"
+    | "/login/callback"
+    | "/login/reset"
+    | "/login/sso"
     | "/portal/me"
     | "/portal/setup"
     | "/app/"
+    | "/login/"
     | "/portal/"
     | "/app/activity/calls"
     | "/app/approvals/$id"
@@ -730,7 +776,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
   PortalRoute: typeof PortalRouteWithChildren
 }
 
@@ -840,6 +886,34 @@ declare module "@tanstack/react-router" {
       fullPath: "/app/virtual-servers"
       preLoaderRoute: typeof AppVirtualServersRouteImport
       parentRoute: typeof AppRoute
+    }
+    "/login/": {
+      id: "/login/"
+      path: "/"
+      fullPath: "/login/"
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    "/login/callback": {
+      id: "/login/callback"
+      path: "/callback"
+      fullPath: "/login/callback"
+      preLoaderRoute: typeof LoginCallbackRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    "/login/reset": {
+      id: "/login/reset"
+      path: "/reset"
+      fullPath: "/login/reset"
+      preLoaderRoute: typeof LoginResetRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    "/login/sso": {
+      id: "/login/sso"
+      path: "/sso"
+      fullPath: "/login/sso"
+      preLoaderRoute: typeof LoginSsoRouteImport
+      parentRoute: typeof LoginRoute
     }
     "/portal/": {
       id: "/portal/"
@@ -1280,6 +1354,22 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface LoginRouteChildren {
+  LoginCallbackRoute: typeof LoginCallbackRoute
+  LoginResetRoute: typeof LoginResetRoute
+  LoginSsoRoute: typeof LoginSsoRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginCallbackRoute: LoginCallbackRoute,
+  LoginResetRoute: LoginResetRoute,
+  LoginSsoRoute: LoginSsoRoute,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 interface PortalRouteChildren {
   PortalMeRoute: typeof PortalMeRoute
   PortalSetupRoute: typeof PortalSetupRoute
@@ -1302,7 +1392,7 @@ const PortalRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
   PortalRoute: PortalRouteWithChildren,
 }
 export const routeTree = rootRouteImport

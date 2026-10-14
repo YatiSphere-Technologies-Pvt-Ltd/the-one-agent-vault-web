@@ -2,6 +2,7 @@ export * from "./AppShell";
 export * from "./CommandPalette";
 export * from "./ConfirmDialog";
 export * from "./DataTable";
+export * from "./InlineAlert";
 export * from "./OverflowMenu";
 export * from "./palette-shortcut";
 export * from "./PageHeader";

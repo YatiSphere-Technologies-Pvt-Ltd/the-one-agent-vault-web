@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import { Link } from "@tanstack/react-router";
+import { isReleased, useFlags } from "../../flags";
 import { useTranslation } from "react-i18next";
 import type { Schemas } from "@agentvault/api-client";
 import { PageHeader, RiskChip, StatusPill, type DataTableColumn } from "@agentvault/ui";
@@ -14,6 +16,7 @@ type Search = { search: ListSearch; onSearchChange: (n: Partial<ListSearch>) => 
 /** DS-01 */
 export function DiscoveryPage({ search, onSearchChange }: Search) {
   const { t } = useTranslation("app");
+  const detailReleased = isReleased("R2", useFlags()); // DS-02 is an R2 screen
   const query = useDiscovered(search);
   const columns = useMemo<DataTableColumn<Schemas["DiscoveredItem"]>[]>(
     () => [
@@ -22,7 +25,17 @@ export function DiscoveryPage({ search, onSearchChange }: Search) {
         header: t("cols.name"),
         cell: (c) => (
           <div className="flex flex-col">
-            <Mono>{c.row.original.name}</Mono>
+            {detailReleased ? (
+              <Link
+                to="/app/discovery/$id"
+                params={{ id: c.row.original.id }}
+                className="font-mono text-mono text-link hover:text-link-hover hover:underline"
+              >
+                {c.row.original.name}
+              </Link>
+            ) : (
+              <Mono>{c.row.original.name}</Mono>
+            )}
             <span className="text-body-sm text-ink-muted">{t(`kinds.${c.row.original.kind}`)}</span>
           </div>
         ),
@@ -33,7 +46,7 @@ export function DiscoveryPage({ search, onSearchChange }: Search) {
       { accessorKey: "source", header: t("cols.source"), enableSorting: false, cell: (c) => <Mono>{c.row.original.source}</Mono> },
       { accessorKey: "firstSeen", header: t("cols.firstSeen"), cell: (c) => <Time value={c.row.original.firstSeen} /> },
     ],
-    [t],
+    [t, detailReleased],
   );
   return (
     <div className="flex flex-col gap-6" data-screen="DS-01">

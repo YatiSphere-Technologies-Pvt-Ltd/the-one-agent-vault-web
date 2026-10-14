@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import * as z from "zod/mini";
+import { optionalOne, searchSchema } from "../../../modules/data/search-params";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -13,7 +13,7 @@ import {
 } from "@agentvault/ui";
 import { NotBuilt, ScreenMeta } from "../../../modules/screens/ScreenPlaceholder";
 
-const search = z.object({ request: z.catch(z.optional(z.literal(1)), undefined) });
+const search = searchSchema({ request: optionalOne });
 
 /** PT-02 portal item detail; PT-03 request access is a drawer on ?request=1. */
 export const Route = createFileRoute("/portal/servers/$id")({

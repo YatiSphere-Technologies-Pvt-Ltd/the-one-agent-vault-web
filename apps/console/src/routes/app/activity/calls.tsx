@@ -1,12 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import * as z from "zod/mini";
 import { CallsPage } from "../../../modules/activity/ActivityPages";
-import { listSearchSchema } from "../../../modules/data/list-search";
+import { listSearchShape } from "../../../modules/data/list-search";
+import { optionalString, searchSchema } from "../../../modules/data/search-params";
 import { useListSearchUpdater } from "../../../modules/data/use-list-search";
 
-const search = z.extend(listSearchSchema, {
-  call: z.catch(z.optional(z.string().check(z.minLength(1))), undefined),
-});
+const search = searchSchema({ ...listSearchShape, call: optionalString });
 
 /** MC-13 tool-call explorer; MC-14 call detail is a drawer on ?call=<id>. */
 export const Route = createFileRoute("/app/activity/calls")({

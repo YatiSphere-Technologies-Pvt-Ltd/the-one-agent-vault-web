@@ -7,6 +7,7 @@ export * from "./dropdown-menu";
 export * from "./field";
 export * from "./input";
 export * from "./label";
+export * from "./password-input";
 export * from "./popover";
 export * from "./radio-group";
 export * from "./route-tabs";

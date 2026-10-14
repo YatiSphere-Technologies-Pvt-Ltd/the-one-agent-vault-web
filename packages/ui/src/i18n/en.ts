@@ -137,4 +137,9 @@ export const uiEn = {
   field: {
     optional: "optional",
   },
+  password: {
+    show: "Show password",
+    hide: "Hide password",
+    capsLock: "Caps Lock is on",
+  },
 } as const;
