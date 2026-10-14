@@ -1,0 +1,49 @@
+---
+import { FileText, ShieldCheck, UserRound } from "lucide-react";
+import { copy } from "../content/en";
+import Arrow from "../components/Arrow.astro";
+import Container from "../components/Container.astro";
+import MotionToggle from "../components/MotionToggle.astro";
+import { SealGlyph } from "../lib/ui";
+
+const steps = copy.build.steps;
+const base = "flex min-w-40 flex-col items-center gap-2 rounded-overlay px-4 py-5 text-center font-semibold lg:min-w-0 lg:flex-1";
+const styles = [
+  `${base} border border-edge bg-surface text-ink`,
+  `${base} border border-edge bg-surface text-ink`,
+  `${base} border-2 border-seal-intact bg-status-success-bg text-status-success-fg`,
+  `${base} border-2 border-strip-person-bg bg-risk-medium-bg text-risk-medium-fg`,
+  `${base} border border-edge bg-surface text-ink`,
+];
+---
+
+<section aria-labelledby="build-title" class="bg-canvas" data-loop data-agent-flow>
+  <Container class="py-(--site-section-y)">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="build-title" class="m-0 max-w-(--site-measure-h2) text-site-h2 text-ink">{copy.build.title}</h2>
+      <MotionToggle />
+    </div>
+    <ol class="m-0 mt-12 flex list-none flex-col items-stretch justify-center gap-1 p-0 md:flex-row md:flex-wrap md:items-center lg:flex-nowrap">
+      {
+        steps.map((label, i) => (
+          <>
+            <li class={styles[i]} data-step={i === 3 ? "wait" : i === 4 ? "after" : ""} style={`--i: ${i}`}>
+              {i === 0 && <FileText aria-hidden="true" className="size-9 text-ink-secondary" strokeWidth={1.5} />}
+              {i === 1 && <SealGlyph hash="sha256:0a7d52c9e81f3b6a4d0c2e5f7a9b1c3d5e7f9a1b3c5d7e9f0a2b4c6d8e0f2a4b" state="intact" size="sm" label={label} decorative className="size-9" />}
+              {i === 2 && <ShieldCheck aria-hidden="true" className="size-9" strokeWidth={1.6} />}
+              {i === 3 && <UserRound aria-hidden="true" className="size-9" strokeWidth={1.6} />}
+              {i === 4 && <SealGlyph hash="sha256:9f2c41d0b7a3e5c8f1d24a6b90e7c3f5d81e2a4c6b8d0f1e3a5c7e9b2d4fe81a" state="intact" size="sm" label={label} decorative className="size-9" />}
+              <span>{label}</span>
+            </li>
+            {i < steps.length - 1 && (
+              <li aria-hidden="true" class="flex justify-center">
+                <Arrow stackBelow="md" />
+              </li>
+            )}
+          </>
+        ))
+      }
+    </ol>
+    <p class="mx-auto mt-8 mb-0 max-w-(--site-measure-note) text-center text-ink-secondary">{copy.build.note}</p>
+  </Container>
+</section>

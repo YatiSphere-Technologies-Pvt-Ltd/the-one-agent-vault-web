@@ -1,0 +1,46 @@
+/* AgentVault UI styles: self-hosted fonts, then the fixed Tailwind token mapping. */
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "./tailwind-theme.css";
+
+/* Scan the UI package for class names wherever this stylesheet is consumed. */
+@source "../";
+
+@theme {
+  --animate-av-fade-in: av-fade-in var(--av-motion-base) var(--av-motion-ease-standard);
+  --animate-av-slide-in: av-slide-in var(--av-motion-slow) var(--av-motion-ease-standard);
+
+  @keyframes av-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes av-slide-in {
+    from { translate: calc(8% * var(--av-inline-dir, 1)) 0; opacity: 0; }
+    to { translate: 0 0; opacity: 1; }
+  }
+}
+
+@layer base {
+  body { margin: 0; min-height: 100dvh; }
+  /* Sheets slide in from the inline-end edge in both directions. */
+  [dir="rtl"] { --av-inline-dir: -1; }
+}
+
+@layer components {
+  /* Strip: bay | who | what | why | actions. Below md the bay becomes a top band and cells stack. */
+  .av-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    @variant md {
+      grid-template-columns: var(--av-size-strip-bay) minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1.4fr) auto;
+    }
+  }
+  .av-strip[data-compact] {
+    @variant md {
+      grid-template-columns: var(--av-size-strip-bay) minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+  }
+}

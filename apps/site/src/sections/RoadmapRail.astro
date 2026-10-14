@@ -1,0 +1,59 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+
+const stages = copy.roadmap.stages;
+const marker: Record<string, string> = {
+  first: "bg-seal-intact",
+  next: "border-3 border-status-info-fg bg-surface",
+  then: "border-3 border-edge-strong bg-surface",
+  later: "border-3 border-dashed border-edge-strong bg-surface",
+};
+const label: Record<string, string> = {
+  first: "text-status-success-fg",
+  next: "text-status-info-fg",
+  then: "text-ink-secondary",
+  later: "text-ink-muted",
+};
+const item: Record<string, string> = {
+  first: "bg-status-success-bg",
+  next: "bg-status-info-bg",
+  then: "bg-sunken",
+  later: "border border-dashed border-edge-strong",
+};
+---
+
+<section id="roadmap" aria-labelledby="road-title" class="bg-surface" data-scene data-roadmap>
+  <Container class="py-(--site-section-y)">
+    <h2 id="road-title" class="m-0 text-site-h2 text-ink">{copy.roadmap.title}</h2>
+    <div class="relative mt-12">
+      <!-- Rail: solid seal green under First, edge-strong after it (horizontal from 768 px). -->
+      <div aria-hidden="true" class="absolute inset-x-0 top-3 hidden h-0.5 md:flex">
+        <span data-rail class="h-full w-1/4 bg-seal-intact"></span>
+        <span class="h-full flex-1 bg-edge-strong"></span>
+      </div>
+      <ol class="relative m-0 grid list-none gap-8 p-0 md:grid-cols-4">
+        {
+          stages.map((stage, i) => (
+            <li class={`relative ps-10 md:ps-0 ${i < stages.length - 1 ? "pb-2 md:pb-0" : ""}`}>
+              {/* Vertical rail on phones. */}
+              {i < stages.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  class={`absolute start-3 top-6 -bottom-8 w-0.5 md:hidden ${i === 0 ? "bg-seal-intact" : "bg-edge-strong"}`}
+                />
+              )}
+              <span aria-hidden="true" data-marker style={`--i: ${i}`} class={`absolute start-0 top-0 block size-6 rounded-pill md:static ${marker[stage.key]}`} />
+              <h3 class={`m-0 text-site-h3 md:mt-4 ${label[stage.key]}`}>{stage.label}</h3>
+              <ul class="m-0 mt-3 flex list-none flex-col gap-2 p-0 text-site-small">
+                {stage.items.map((it, j) => (
+                  <li data-reveal style={`--i: ${i * 2 + j}`} class={`rounded-control px-3 py-2 text-ink ${item[stage.key]}`}>{it}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,36 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+
+const RUST = 187;
+// --i is the diagonal (row + column) so the dots fill in as a wave.
+const dots = Array.from({ length: 300 }, (_, i) => ({ rust: i === RUST, i: (i % 30) + Math.floor(i / 30) }));
+---
+
+<section aria-labelledby="risk-title" class="bg-surface">
+  <Container class="flex flex-wrap items-center gap-12 py-(--site-section-y)">
+    <div class="min-w-0 flex-1 basis-80">
+      <div class="text-site-stat text-seal-broken">{copy.risk.stat}</div>
+      <h2 id="risk-title" class="mt-4 mb-0 max-w-(--site-measure-stat) text-site-h3 text-ink">{copy.risk.title}</h2>
+      <a href={copy.risk.sourceHref} class="mt-3 inline-block text-body text-link hover:text-link-hover">{copy.risk.source}</a>
+    </div>
+    <div
+      role="img"
+      aria-label={copy.risk.dotsLabel}
+      class="risk-dots grid min-w-0 flex-1 basis-120 grid-cols-15 gap-1 sm:grid-cols-30"
+      data-risk-dots
+      data-scene
+    >
+      {
+        dots.map((d) =>
+          d.rust ? (
+            <span data-rust style={`--i: ${d.i}`} class="block aspect-square rounded-pill bg-seal-broken ring-3 ring-seal-core-broken" />
+          ) : (
+            <span style={`--i: ${d.i}`} class="block aspect-square rounded-pill bg-edge" />
+          ),
+        )
+      }
+    </div>
+  </Container>
+</section>
+

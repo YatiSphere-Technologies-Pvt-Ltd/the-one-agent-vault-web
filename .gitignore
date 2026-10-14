@@ -1,0 +1,10 @@
+node_modules/
+dist/
+storybook-static/
+coverage/
+test-results/
+playwright-report/
+.vite/
+*.tsbuildinfo
+.DS_Store
+.astro/

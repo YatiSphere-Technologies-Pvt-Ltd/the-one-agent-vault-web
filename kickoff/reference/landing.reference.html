@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AgentVault: enterprise AI agents, under seal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#175747}a:hover{color:#134538}
+</style>
+</helmet>
+<div style="background: #FFFFFF; color: #172024; font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; line-height: 26px">
+
+<header style="border-bottom: 1px solid #D5DBD8; background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+<a href="#" style="display: flex; align-items: center; gap: 10px; color: #172024; text-decoration: none; font-weight: 600; font-size: 18px">
+<svg width="28" height="28" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="7" stroke-dasharray="21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9" transform="rotate(37 36 36)"></circle><circle cx="36" cy="36" r="13" fill="#1D6B57"></circle></svg>
+AgentVault
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 24px">
+<a href="#platform" style="color: #3E494F; text-decoration: none">Platform</a>
+<a href="#govern" style="color: #3E494F; text-decoration: none">Governance</a>
+<a href="#roadmap" style="color: #3E494F; text-decoration: none">Roadmap</a>
+<a href="#deploy" style="color: #3E494F; text-decoration: none">Deployment</a>
+</nav>
+<a href="#partner" style="margin-left: auto; display: inline-flex; align-items: center; height: 44px; padding: 0 18px; background: #175747; color: #FFFFFF; border-radius: 4px; text-decoration: none; font-weight: 600">Become a design partner</a>
+</div>
+</header>
+
+<!-- HERO -->
+<section aria-labelledby="hero-title" style="background: #EEF1EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 88px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 440px; min-width: 0">
+<h1 id="hero-title" style="margin: 0; font-size: clamp(46px, 6.4vw, 88px); line-height: 0.98; font-weight: 600; letter-spacing: -0.035em; max-width: 9ch">AI agents, under seal.</h1>
+<p style="margin: 28px 0 0; font-size: 20px; line-height: 30px; color: #3E494F; max-width: 26em">Build, run and govern agents. Everything they touch is approved, pinned and watched.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px">
+<a href="#partner" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: #175747; color: #FFFFFF; border-radius: 4px; text-decoration: none; font-weight: 600">Become a design partner</a>
+<a href="#platform" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: #FFFFFF; color: #172024; border: 1px solid #85908C; border-radius: 4px; text-decoration: none; font-weight: 500">See the platform</a>
+</div>
+</div>
+
+<div style="flex: 1 1 520px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; padding: 24px">
+<div role="group" aria-label="What to seal" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; background: #F5F7F6; border: 1px solid #E4E8E6; border-radius: 6px">
+<sc-for list="{{ kinds }}" as="k" hint-placeholder-count="4">
+<button onClick="{{ k.pick }}" aria-pressed="{{ k.pressed }}" style="{{ k.style }}">{{ k.label }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin-top: 20px">
+<svg width="240" height="240" viewBox="0 0 72 72" role="img" aria-label="{{ sealLabel }}" style="flex: 0 0 auto; margin: 0 auto">
+<circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="6" stroke-dasharray="{{ cur.dash }}" transform="rotate({{ cur.rot }} 36 36)"></circle>
+<sc-if value="{{ intact }}" hint-placeholder-val="{{ true }}">
+<circle cx="36" cy="36" r="14" fill="#EAF4F0" stroke="#1D6B57" stroke-width="1.5"></circle>
+<path d="M30 36l4 4 8-9" fill="none" stroke="#1D6B57" stroke-width="2.5"></path>
+</sc-if>
+<sc-if value="{{ changed }}" hint-placeholder-val="{{ false }}">
+<circle cx="36" cy="36" r="30" fill="none" stroke="#A8480C" stroke-width="6.5" stroke-dasharray="40 148.5" stroke-dashoffset="-20"></circle>
+<path d="M57 14 L46 30 L54 33 L42 50" fill="none" stroke="#A8480C" stroke-width="2.5"></path>
+<circle cx="36" cy="36" r="14" fill="#FBE6D8" stroke="#A8480C" stroke-width="1.5"></circle>
+<path d="M31 31l10 10M41 31l-10 10" fill="none" stroke="#A8480C" stroke-width="2.5"></path>
+</sc-if>
+</svg>
+<div style="flex: 1 1 200px; min-width: 0">
+<div style="font-weight: 600; font-size: 20px">{{ cur.name }}</div>
+<div style="color: #55616A; font-size: 14px">{{ cur.type }}</div>
+<div style="margin-top: 14px">
+<sc-if value="{{ changed }}" hint-placeholder-val="{{ false }}"><span style="padding: 3px 12px; border-radius: 999px; background: #FDF3EC; color: #8A3B08; border: 1px solid #F5C9AA; font-size: 14px; font-weight: 600">{{ cur.heldLabel }}</span></sc-if>
+<sc-if value="{{ intact }}" hint-placeholder-val="{{ true }}"><span style="padding: 3px 12px; border-radius: 999px; background: #EAF4F0; color: #175747; border: 1px solid #A9D1C2; font-size: 14px; font-weight: 600">{{ cur.okLabel }}</span></sc-if>
+</div>
+<sc-if value="{{ changed }}" hint-placeholder-val="{{ false }}">
+<p style="margin: 14px 0 0; font-size: 14px; line-height: 21px"><mark style="background: #FBE6D8; color: #8A3B08; padding: 0 2px">{{ cur.mark }}</mark></p>
+</sc-if>
+<button onClick="{{ toggle }}" style="margin-top: 18px; width: 100%; height: 44px; border: 1px solid #85908C; background: #FFFFFF; color: #172024; border-radius: 4px; font: inherit; font-weight: 600; cursor: pointer">{{ buttonLabel }}</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 1 IN 300 -->
+<section aria-labelledby="risk-title" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 88px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 320px; min-width: 0">
+<div style="font-size: clamp(64px, 9vw, 120px); line-height: 1; font-weight: 600; letter-spacing: -0.04em; color: #A8480C">1 in 300</div>
+<h2 id="risk-title" style="margin: 16px 0 0; font-size: 24px; line-height: 32px; font-weight: 600; max-width: 18em">Agent Skills analysed by ESET were directly malicious. Which one is on your laptops?</h2>
+<a href="https://expertinsights.com/news/1-in-300-ai-agent-skills-is-directly-malicious-eset-research-finds" style="display: inline-block; margin-top: 12px; font-size: 14px">Source: Expert Insights, July 2026</a>
+</div>
+<div role="img" aria-label="300 dots, one of them highlighted in rust" style="flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{ dots }}" as="d" hint-placeholder-count="300">
+<span style="{{ d.style }}"></span>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- PLATFORM DIAGRAM -->
+<section id="platform" aria-labelledby="platform-title" style="background: #172024; color: #E4EAE7">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<h2 id="platform-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; max-width: 16ch">Every call passes through the seal.</h2>
+
+<div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 14px; color: #8E9A96">Who calls</div>
+<div style="padding: 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#BAC5C0" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg><span style="font-weight: 600">AI assistants</span></div>
+<div style="padding: 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#BAC5C0" stroke-width="1.6" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"></path></svg><span style="font-weight: 600">Coding agents</span></div>
+<div style="padding: 18px; border: 1px solid #5FA88E; border-radius: 6px; background: #12322A; display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7FCBB0" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><span style="font-weight: 600">Your own agents</span></div>
+</div>
+
+<div aria-hidden="true" style="flex: 0 0 48px; display: flex; align-items: center; justify-content: center"><svg width="48" height="24" viewBox="0 0 48 24"><path d="M0 12h40M32 4l8 8-8 8" fill="none" stroke="#5FA88E" stroke-width="2"></path></svg></div>
+
+<div style="flex: 1.4 1 340px; min-width: 0; padding: 28px; border: 2px solid #5FA88E; border-radius: 8px; background: #141C1F; display: flex; flex-direction: column; align-items: center; gap: 18px">
+<svg width="120" height="120" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#5FA88E" stroke-width="6" stroke-dasharray="16.4 4.1 12.3 4.1 6.1 4.1 10.2 4.1 14.3 4.1 20.5 4.1 4.1 4.1 4.1 4.1 8.2 4.1 18.4 4.1 14.3 4.1 10.2 4.1" transform="rotate(284 36 36)"></circle><circle cx="36" cy="36" r="14" fill="#12322A" stroke="#5FA88E" stroke-width="1.5"></circle><path d="M30 36l4 4 8-9" fill="none" stroke="#7FCBB0" stroke-width="2.5"></path></svg>
+<div style="font-weight: 600; font-size: 22px">AgentVault</div>
+<ol style="list-style: none; margin: 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 14px; text-align: center">
+<li style="padding: 10px 6px; border: 1px solid #2A3539; border-radius: 4px">Identity</li>
+<li style="padding: 10px 6px; border: 1px solid #2A3539; border-radius: 4px">Policy</li>
+<li style="padding: 10px 6px; border: 1px solid #5FA88E; border-radius: 4px; color: #7FCBB0; font-weight: 600">Seal check</li>
+<li style="padding: 10px 6px; border: 1px solid #2A3539; border-radius: 4px">Data-loss</li>
+<li style="padding: 10px 6px; border: 1px solid #D9B95E; border-radius: 4px; color: #E8C877">Approval</li>
+<li style="padding: 10px 6px; border: 1px solid #2A3539; border-radius: 4px">Audit</li>
+</ol>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; font-size: 14px">
+<span style="padding: 4px 12px; border-radius: 999px; background: #12322A; color: #7FCBB0">MCP gateway</span>
+<span style="padding: 4px 12px; border-radius: 999px; background: #172A40; color: #9DBCE3">AI gateway</span>
+<span style="padding: 4px 12px; border-radius: 999px; background: #1B2528; color: #BAC5C0">Agent runtime</span>
+</div>
+</div>
+
+<div aria-hidden="true" style="flex: 0 0 48px; display: flex; align-items: center; justify-content: center"><svg width="48" height="24" viewBox="0 0 48 24"><path d="M0 12h40M32 4l8 8-8 8" fill="none" stroke="#5FA88E" stroke-width="2"></path></svg></div>
+
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 14px; color: #8E9A96">What they reach</div>
+<div style="padding: 14px 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="24" height="24" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#5FA88E" stroke-width="9" stroke-dasharray="21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9"></circle></svg><span style="font-weight: 600">MCP servers</span></div>
+<div style="padding: 14px 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="24" height="24" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#5FA88E" stroke-width="9" stroke-dasharray="16.1 4.6 4.6 4.6 11.5 4.6 4.6 4.6 6.9 4.6 25.3 4.6 6.9 4.6 9.2 4.6 4.6 4.6 13.8 4.6 20.7 4.6 9.2 4.6"></circle></svg><span style="font-weight: 600">Agent Skills</span></div>
+<div style="padding: 14px 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="24" height="24" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#5FA88E" stroke-width="9" stroke-dasharray="4.1 4.1 6.1 4.1 12.3 4.1 18.4 4.1 18.4 4.1 10.2 4.1 12.3 4.1 14.3 4.1 10.2 4.1 6.1 4.1 4.1 4.1 22.5 4.1"></circle></svg><span style="font-weight: 600">Models</span></div>
+<div style="padding: 14px 18px; border: 1px solid #2A3539; border-radius: 6px; background: #1B2528; display: flex; gap: 12px; align-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#BAC5C0" stroke-width="1.6" aria-hidden="true"><path d="M4 5c0-1 3.5-2 8-2s8 1 8 2v14c0 1-3.5 2-8 2s-8-1-8-2z"></path><path d="M4 12c0 1 3.5 2 8 2s8-1 8-2"></path></svg><span style="font-weight: 600">Your data and systems</span></div>
+</div>
+</div>
+
+<div style="margin-top: 20px; padding: 18px 24px; border: 1px dashed #5F6C70; border-radius: 6px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; font-size: 15px; color: #BAC5C0">
+<span style="font-weight: 600; color: #E4EAE7">Above it all: your AI governance programme</span>
+<span>Use cases</span><span>AI register</span><span>Risk</span><span>Assessments</span><span>Evidence</span>
+</div>
+</div>
+</section>
+
+<!-- ESTATE GLIMPSE -->
+<section aria-labelledby="estate-title" style="background: #EEF1EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<h2 id="estate-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; max-width: 18ch">Your whole AI estate, one seal per row.</h2>
+<div style="margin-top: 40px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; overflow-x: auto">
+<table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px">
+<thead><tr style="text-align: left; color: #55616A; font-size: 14px; background: #F5F7F6"><th style="padding: 12px 20px; font-weight: 500; width: 56px"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Seal</span></th><th style="padding: 12px 12px; font-weight: 500">Name</th><th style="padding: 12px 12px; font-weight: 500">Kind</th><th style="padding: 12px 12px; font-weight: 500">Status</th><th style="padding: 12px 20px; font-weight: 500">Used by</th></tr></thead>
+<tbody>
+<tr style="border-top: 1px solid #E4E8E6; background: #FFFAF6"><td style="padding: 12px 20px"><svg width="32" height="32" viewBox="0 0 72 72" role="img" aria-label="Seal broken"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="9" stroke-dasharray="21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9" transform="rotate(37 36 36)"></circle><circle cx="36" cy="36" r="30" fill="none" stroke="#A8480C" stroke-width="10" stroke-dasharray="40 148.5" stroke-dashoffset="-20"></circle></svg></td><td style="padding: 12px; font-weight: 600">salesforce-crm</td><td style="padding: 12px; color: #3E494F">MCP server</td><td style="padding: 12px"><span style="padding: 2px 10px; border-radius: 999px; background: #FDF3EC; color: #8A3B08; border: 1px solid #F5C9AA; font-size: 14px; font-weight: 600">Held: definition changed</span></td><td style="padding: 12px 20px; color: #3E494F">Sales</td></tr>
+<tr style="border-top: 1px solid #E4E8E6"><td style="padding: 12px 20px"><svg width="32" height="32" viewBox="0 0 72 72" role="img" aria-label="Seal intact"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="9" stroke-dasharray="16.1 4.6 4.6 4.6 11.5 4.6 4.6 4.6 6.9 4.6 25.3 4.6 6.9 4.6 9.2 4.6 4.6 4.6 13.8 4.6 20.7 4.6 9.2 4.6" transform="rotate(112 36 36)"></circle></svg></td><td style="padding: 12px; font-weight: 600">contract-review</td><td style="padding: 12px; color: #3E494F">Agent Skill</td><td style="padding: 12px"><span style="padding: 2px 10px; border-radius: 999px; background: #EAF4F0; color: #175747; border: 1px solid #A9D1C2; font-size: 14px; font-weight: 600">Signed</span></td><td style="padding: 12px 20px; color: #3E494F">Legal</td></tr>
+<tr style="border-top: 1px solid #E4E8E6"><td style="padding: 12px 20px"><svg width="32" height="32" viewBox="0 0 72 72" role="img" aria-label="Seal intact"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="9" stroke-dasharray="4.1 4.1 6.1 4.1 12.3 4.1 18.4 4.1 18.4 4.1 10.2 4.1 12.3 4.1 14.3 4.1 10.2 4.1 6.1 4.1 4.1 4.1 22.5 4.1" transform="rotate(205 36 36)"></circle></svg></td><td style="padding: 12px; font-weight: 600">drafting</td><td style="padding: 12px; color: #3E494F">Model route</td><td style="padding: 12px"><span style="padding: 2px 10px; border-radius: 999px; background: #EAF4F0; color: #175747; border: 1px solid #A9D1C2; font-size: 14px; font-weight: 600">Evaluated</span></td><td style="padding: 12px 20px; color: #3E494F">Everyone</td></tr>
+<tr style="border-top: 1px solid #E4E8E6"><td style="padding: 12px 20px"><svg width="32" height="32" viewBox="0 0 72 72" role="img" aria-label="Seal intact"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="9" stroke-dasharray="16.4 4.1 12.3 4.1 6.1 4.1 10.2 4.1 14.3 4.1 20.5 4.1 4.1 4.1 4.1 4.1 8.2 4.1 18.4 4.1 14.3 4.1 10.2 4.1" transform="rotate(284 36 36)"></circle></svg></td><td style="padding: 12px; font-weight: 600">invoice-processing</td><td style="padding: 12px; color: #3E494F">Agent</td><td style="padding: 12px"><span style="padding: 2px 10px; border-radius: 999px; background: #EAF4F0; color: #175747; border: 1px solid #A9D1C2; font-size: 14px; font-weight: 600">Published</span></td><td style="padding: 12px 20px; color: #3E494F">Finance</td></tr>
+<tr style="border-top: 1px solid #E4E8E6"><td style="padding: 12px 20px"><svg width="32" height="32" viewBox="0 0 72 72" role="img" aria-label="No seal: not yet reviewed"><circle cx="36" cy="36" r="30" fill="none" stroke="#85908C" stroke-width="5" stroke-dasharray="3 5"></circle></svg></td><td style="padding: 12px; font-weight: 600">notes-sync</td><td style="padding: 12px; color: #3E494F">MCP server, found on laptops</td><td style="padding: 12px"><span style="padding: 2px 10px; border-radius: 999px; background: #FCEBE9; color: #8A1C12; border: 1px solid #F4A39C; font-size: 14px; font-weight: 600">Unmanaged</span></td><td style="padding: 12px 20px; color: #3E494F">12 devices</td></tr>
+</tbody>
+</table>
+</div>
+<p style="margin: 14px 0 0; font-size: 14px; color: #55616A">Sample data.</p>
+</div>
+</section>
+
+<!-- GOVERNANCE LOOP -->
+<section id="govern" aria-labelledby="govern-title" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 360px; min-width: 0">
+<h2 id="govern-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; max-width: 14ch">Governance that closes the loop.</h2>
+<p style="margin: 20px 0 0; font-size: 18px; line-height: 28px; color: #3E494F; max-width: 24em">A use-case approval becomes gateway policy. What happens at the gateway becomes evidence.</p>
+<div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+<span style="padding: 4px 12px; border: 1px solid #D5DBD8; border-radius: 999px">EU AI Act</span>
+<span style="padding: 4px 12px; border: 1px solid #D5DBD8; border-radius: 999px">NIST AI RMF</span>
+<span style="padding: 4px 12px; border: 1px solid #D5DBD8; border-radius: 999px">ISO/IEC 42001</span>
+</div>
+</div>
+<div style="flex: 1 1 460px; min-width: 0; display: flex; justify-content: center">
+<div style="position: relative; width: 100%; max-width: 480px; aspect-ratio: 1 / 1">
+<svg viewBox="0 0 480 480" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+<defs><marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1D6B57"></path></marker></defs>
+<path d="M 330 92 A 170 170 0 0 1 400 330" fill="none" stroke="#1D6B57" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+<path d="M 330 420 A 170 170 0 0 1 150 420" fill="none" stroke="#1D6B57" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+<path d="M 80 330 A 170 170 0 0 1 150 92" fill="none" stroke="#1D6B57" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+<circle cx="240" cy="250" r="54" fill="#EAF4F0" stroke="#1D6B57" stroke-width="1.5"></circle>
+<circle cx="240" cy="250" r="40" fill="none" stroke="#1D6B57" stroke-width="7" stroke-dasharray="16.4 4.1 12.3 4.1 6.1 4.1 10.2 4.1 14.3 4.1 20.5 4.1 4.1 4.1 4.1 4.1 8.2 4.1 18.4 4.1 14.3 4.1 10.2 4.1"></circle>
+</svg>
+<div style="position: absolute; left: 50%; top: 2%; transform: translateX(-50%); width: 46%; padding: 14px 16px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 6px; text-align: center">
+<div style="font-weight: 600">Approve</div><div style="font-size: 14px; line-height: 20px; color: #55616A">use case with conditions</div>
+</div>
+<div style="position: absolute; right: 0; bottom: 14%; width: 40%; padding: 14px 16px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 6px; text-align: center">
+<div style="font-weight: 600">Enforce</div><div style="font-size: 14px; line-height: 20px; color: #55616A">conditions as gateway policy</div>
+</div>
+<div style="position: absolute; left: 0; bottom: 14%; width: 40%; padding: 14px 16px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 6px; text-align: center">
+<div style="font-weight: 600">Prove</div><div style="font-size: 14px; line-height: 20px; color: #55616A">runtime events as evidence</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- BUILD AGENTS -->
+<section aria-labelledby="build-title" style="background: #EEF1EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<h2 id="build-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; max-width: 18ch">Agents you build inherit every control.</h2>
+<div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 0; align-items: center; justify-content: center">
+<div style="padding: 20px; min-width: 150px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; text-align: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3E494F" stroke-width="1.5" aria-hidden="true"><path d="M4 4h12l4 4v12H4z"></path><path d="M8 12h8M8 16h5"></path></svg><div style="margin-top: 8px; font-weight: 600">Invoice arrives</div></div>
+<svg width="56" height="24" viewBox="0 0 56 24" aria-hidden="true"><path d="M4 12h44M40 4l8 8-8 8" fill="none" stroke="#85908C" stroke-width="2"></path></svg>
+<div style="padding: 20px; min-width: 150px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; text-align: center"><svg width="36" height="36" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="8" stroke-dasharray="4.1 4.1 6.1 4.1 12.3 4.1 18.4 4.1 18.4 4.1 10.2 4.1 12.3 4.1 14.3 4.1 10.2 4.1 6.1 4.1 4.1 4.1 22.5 4.1"></circle></svg><div style="margin-top: 8px; font-weight: 600">Extract and match</div></div>
+<svg width="56" height="24" viewBox="0 0 56 24" aria-hidden="true"><path d="M4 12h44M40 4l8 8-8 8" fill="none" stroke="#85908C" stroke-width="2"></path></svg>
+<div style="padding: 20px; min-width: 150px; background: #EAF4F0; border: 2px solid #1D6B57; border-radius: 8px; text-align: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#175747" stroke-width="1.6" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><div style="margin-top: 8px; font-weight: 600; color: #175747">Policy gate</div></div>
+<svg width="56" height="24" viewBox="0 0 56 24" aria-hidden="true"><path d="M4 12h44M40 4l8 8-8 8" fill="none" stroke="#85908C" stroke-width="2"></path></svg>
+<div style="padding: 20px; min-width: 150px; background: #FBF5E6; border: 2px solid #D9B95E; border-radius: 8px; text-align: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#6E5205" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><div style="margin-top: 8px; font-weight: 600; color: #6E5205">Human approves</div></div>
+<svg width="56" height="24" viewBox="0 0 56 24" aria-hidden="true"><path d="M4 12h44M40 4l8 8-8 8" fill="none" stroke="#85908C" stroke-width="2"></path></svg>
+<div style="padding: 20px; min-width: 150px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; text-align: center"><svg width="36" height="36" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#1D6B57" stroke-width="8" stroke-dasharray="21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9"></circle></svg><div style="margin-top: 8px; font-weight: 600">Post to ERP</div></div>
+</div>
+<p style="margin: 28px auto 0; text-align: center; color: #3E494F; max-width: 36em">Agent Studio, durable runs, human steps and evaluations, all on the same gateways.</p>
+</div>
+</section>
+
+<!-- APPROVAL STRIPS -->
+<section aria-labelledby="decide-title" style="background: #0D1416; color: #E4EAE7">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<h2 id="decide-title" style="flex: 1 1 320px; margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Risky actions wait for a person.</h2>
+<ul aria-label="Example decisions" style="flex: 1.6 1 560px; min-width: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<li style="display: grid; grid-template-columns: 104px minmax(0, 1fr) minmax(0, 1.2fr); background: #141C1F; border: 1px solid #2A3539; border-radius: 4px; overflow: hidden">
+<div style="background: #D9B95E; color: #0D1416; padding: 14px; display: flex; flex-direction: column"><span style="font-size: 20px; font-weight: 600">08:53</span><span style="font-size: 14px">needs you</span></div>
+<div style="padding: 14px 16px; border-right: 1px solid #2A3539; font-weight: 600">create_payment_batch</div>
+<div style="padding: 14px 16px; font-size: 15px; color: #BAC5C0">Over the approval limit</div>
+</li>
+<li style="display: grid; grid-template-columns: 104px minmax(0, 1fr) minmax(0, 1.2fr); background: #141C1F; border: 1px solid #2A3539; border-radius: 4px; overflow: hidden">
+<div style="background: #E08F86; color: #0D1416; padding: 14px; display: flex; flex-direction: column"><span style="font-size: 20px; font-weight: 600">08:52</span><span style="font-size: 14px">held</span></div>
+<div style="padding: 14px 16px; border-right: 1px solid #2A3539; font-weight: 600">update_opportunity</div>
+<div style="padding: 14px 16px; font-size: 15px; color: #BAC5C0">Seal broken</div>
+</li>
+<li style="display: grid; grid-template-columns: 104px minmax(0, 1fr) minmax(0, 1.2fr); background: #141C1F; border: 1px solid #2A3539; border-radius: 4px; overflow: hidden">
+<div style="background: #5FA88E; color: #0D1416; padding: 14px; display: flex; flex-direction: column"><span style="font-size: 20px; font-weight: 600">08:31</span><span style="font-size: 14px">approved</span></div>
+<div style="padding: 14px 16px; border-right: 1px solid #2A3539; font-weight: 600">share_document</div>
+<div style="padding: 14px 16px; font-size: 15px; color: #BAC5C0">7-day expiry</div>
+</li>
+</ul>
+</div>
+</section>
+
+<!-- ROADMAP RAIL -->
+<section id="roadmap" aria-labelledby="road-title" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<h2 id="road-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Where it starts, where it goes.</h2>
+<div style="position: relative; margin-top: 56px">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: linear-gradient(90deg, #1D6B57 0 25%, #A7B0AC 25% 100%)"></div>
+<ol style="list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px">
+<li>
+<span aria-hidden="true" style="display: block; width: 24px; height: 24px; border-radius: 12px; background: #1D6B57"></span>
+<div style="margin-top: 18px; font-size: 24px; font-weight: 600; color: #175747">First</div>
+<div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+<span style="padding: 8px 12px; background: #EAF4F0; border-radius: 4px">MCP gateway and pinning</span>
+<span style="padding: 8px 12px; background: #EAF4F0; border-radius: 4px">Signed Agent Skills</span>
+<span style="padding: 8px 12px; background: #EAF4F0; border-radius: 4px">Shadow discovery</span>
+<span style="padding: 8px 12px; background: #EAF4F0; border-radius: 4px">Approvals and kill switch</span>
+<span style="padding: 8px 12px; background: #EAF4F0; border-radius: 4px">Audit and evidence</span>
+</div>
+</li>
+<li>
+<span aria-hidden="true" style="display: block; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 3px solid #2A527E; box-sizing: border-box"></span>
+<div style="margin-top: 18px; font-size: 24px; font-weight: 600; color: #2A527E">Next</div>
+<div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+<span style="padding: 8px 12px; background: #E8EFF7; border-radius: 4px">AI gateway for models</span>
+<span style="padding: 8px 12px; background: #E8EFF7; border-radius: 4px">Use-case approval</span>
+<span style="padding: 8px 12px; background: #E8EFF7; border-radius: 4px">AI register and risk</span>
+<span style="padding: 8px 12px; background: #E8EFF7; border-radius: 4px">Framework mapping</span>
+</div>
+</li>
+<li>
+<span aria-hidden="true" style="display: block; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 3px solid #85908C; box-sizing: border-box"></span>
+<div style="margin-top: 18px; font-size: 24px; font-weight: 600; color: #3E494F">Then</div>
+<div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+<span style="padding: 8px 12px; background: #F5F7F6; border-radius: 4px">Agent Studio</span>
+<span style="padding: 8px 12px; background: #F5F7F6; border-radius: 4px">Durable agent runtime</span>
+<span style="padding: 8px 12px; background: #F5F7F6; border-radius: 4px">Governed knowledge</span>
+<span style="padding: 8px 12px; background: #F5F7F6; border-radius: 4px">Evaluations</span>
+</div>
+</li>
+<li>
+<span aria-hidden="true" style="display: block; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 3px dashed #85908C; box-sizing: border-box"></span>
+<div style="margin-top: 18px; font-size: 24px; font-weight: 600; color: #55616A">Later</div>
+<div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+<span style="padding: 8px 12px; border: 1px dashed #A7B0AC; border-radius: 4px">Air-gapped, AWS and GCP</span>
+<span style="padding: 8px 12px; border: 1px dashed #A7B0AC; border-radius: 4px">KYC, Workforce, GRC suites</span>
+<span style="padding: 8px 12px; border: 1px dashed #A7B0AC; border-radius: 4px">Partner marketplace</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- DEPLOY -->
+<section id="deploy" aria-labelledby="deploy-title" style="background: #EEF1EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<h2 id="deploy-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Runs where your data must stay.</h2>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; padding: 24px">
+<svg width="120" height="72" viewBox="0 0 120 72" aria-hidden="true"><path d="M30 56h62a16 16 0 0 0 0-32 24 24 0 0 0-46-4 18 18 0 0 0-16 36z" fill="#EAF4F0" stroke="#1D6B57" stroke-width="2"></path><circle cx="60" cy="40" r="10" fill="none" stroke="#1D6B57" stroke-width="3" stroke-dasharray="4 2"></circle></svg>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px">Managed SaaS</div>
+<div style="font-size: 14px; color: #175747; font-weight: 600">First</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; padding: 24px">
+<svg width="120" height="72" viewBox="0 0 120 72" aria-hidden="true"><path d="M30 56h62a16 16 0 0 0 0-32 24 24 0 0 0-46-4 18 18 0 0 0-16 36z" fill="#EAF4F0" stroke="#1D6B57" stroke-width="2"></path><rect x="48" y="30" width="24" height="20" rx="2" fill="#FFFFFF" stroke="#1D6B57" stroke-width="2"></rect><path d="M53 30v-5a7 7 0 0 1 14 0v5" fill="none" stroke="#1D6B57" stroke-width="2"></path></svg>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px">Dedicated tenant</div>
+<div style="font-size: 14px; color: #175747; font-weight: 600">First</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 8px; padding: 24px">
+<svg width="120" height="72" viewBox="0 0 120 72" aria-hidden="true"><path d="M10 40h36a10 10 0 0 0 0-20 15 15 0 0 0-28-2 11 11 0 0 0-8 22z" fill="#EAF4F0" stroke="#1D6B57" stroke-width="2"></path><rect x="78" y="22" width="34" height="40" fill="#F5F7F6" stroke="#3E494F" stroke-width="2"></rect><path d="M84 30h6M96 30h6M84 40h6M96 40h6" stroke="#3E494F" stroke-width="2"></path><path d="M50 32h26" stroke="#1D6B57" stroke-width="2" stroke-dasharray="4 3"></path><circle cx="95" cy="54" r="5" fill="#1D6B57"></circle></svg>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px">Hybrid gateway</div>
+<div style="font-size: 14px; color: #175747; font-weight: 600">First</div>
+</div>
+<div style="background: #F5F7F6; border: 1px dashed #A7B0AC; border-radius: 8px; padding: 24px">
+<svg width="120" height="72" viewBox="0 0 120 72" aria-hidden="true"><rect x="38" y="10" width="44" height="54" fill="#FFFFFF" stroke="#55616A" stroke-width="2"></rect><path d="M46 20h8M66 20h8M46 32h8M66 32h8M46 44h8M66 44h8" stroke="#55616A" stroke-width="2"></path><path d="M20 64h80" stroke="#55616A" stroke-width="2"></path></svg>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px">Air-gapped on-premises</div>
+<div style="font-size: 14px; color: #55616A; font-weight: 600">Later</div>
+</div>
+</div>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 15px">
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 999px">Single sign-on and SCIM</span>
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 999px">Your own keys</span>
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 999px">Private networking</span>
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 999px">Tamper-evident audit</span>
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px solid #D5DBD8; border-radius: 999px">Region pinning</span>
+<span style="padding: 8px 14px; background: #FFFFFF; border: 1px dashed #A7B0AC; border-radius: 999px; color: #55616A">[Attestations, once reports exist]</span>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="partner" aria-labelledby="partner-title" style="background: #172024; color: #E4EAE7">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; gap: 28px; align-items: center">
+<svg width="112" height="112" viewBox="0 0 72 72" aria-hidden="true" style="flex: 0 0 auto"><circle cx="36" cy="36" r="30" fill="none" stroke="#5FA88E" stroke-width="6" stroke-dasharray="21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9" transform="rotate(37 36 36)"></circle><circle cx="36" cy="36" r="14" fill="#12322A" stroke="#5FA88E" stroke-width="1.5"></circle><path d="M30 36l4 4 8-9" fill="none" stroke="#7FCBB0" stroke-width="2.5"></path></svg>
+<h2 id="partner-title" style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Shape it with us.</h2>
+</div>
+<form style="flex: 1 1 460px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: #BAC5C0">Work email<input type="email" autocomplete="email" style="height: 48px; border: 1px solid #5F6C70; border-radius: 4px; padding: 0 12px; font: inherit; font-size: 16px; background: #141C1F; color: #E4EAE7"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: #BAC5C0">Company<input type="text" autocomplete="organization" style="height: 48px; border: 1px solid #5F6C70; border-radius: 4px; padding: 0 12px; font: inherit; font-size: 16px; background: #141C1F; color: #E4EAE7"></label>
+<button type="submit" style="grid-column: 1 / -1; height: 52px; border: 0; background: #5FA88E; color: #0A231D; border-radius: 4px; font: inherit; font-size: 17px; font-weight: 600; cursor: pointer">Become a design partner</button>
+</form>
+</div>
+</section>
+
+<footer style="background: #0D1416; color: #8E9A96">
+<div style="max-width: 1240px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; font-size: 14px">
+<span style="font-weight: 600; color: #E4EAE7">AgentVault</span>
+<span>© 2026 [Company legal name]</span>
+<nav aria-label="Footer" style="margin-left: auto; display: flex; flex-wrap: wrap; gap: 20px">
+<a href="#" style="color: #BAC5C0">Security</a>
+<a href="#" style="color: #BAC5C0">Privacy</a>
+<a href="#" style="color: #BAC5C0">Terms</a>
+</nav>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":6200}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { kind: 'server', changed: false };
+}
+renderVals() {
+const data = {
+server: { label: 'MCP server', name: 'salesforce-crm', type: 'MCP server', okLabel: 'Approved', heldLabel: 'Held: definition changed', dash: '21.4 3.9 13.6 3.9 7.8 3.9 7.8 3.9 11.7 3.9 5.8 3.9 3.9 3.9 3.9 3.9 17.5 3.9 17.5 3.9 11.7 3.9 19.4 3.9', rot: 37, mark: 'A tool description now tells the agent to copy the user’s email.' },
+skill: { label: 'Skill', name: 'contract-review', type: 'Agent Skill', okLabel: 'Signed', heldLabel: 'Quarantined', dash: '16.1 4.6 4.6 4.6 11.5 4.6 4.6 4.6 6.9 4.6 25.3 4.6 6.9 4.6 9.2 4.6 4.6 4.6 13.8 4.6 20.7 4.6 9.2 4.6', rot: 112, mark: 'A bundled script now uploads files to an outside address.' },
+model: { label: 'Model', name: 'drafting', type: 'Model route', okLabel: 'Evaluated', heldLabel: 'Held: model changed', dash: '4.1 4.1 6.1 4.1 12.3 4.1 18.4 4.1 18.4 4.1 10.2 4.1 12.3 4.1 14.3 4.1 10.2 4.1 6.1 4.1 4.1 4.1 22.5 4.1', rot: 205, mark: 'The provider swapped in a model version you have not evaluated.' },
+agent: { label: 'Agent', name: 'invoice-processing', type: 'Agent', okLabel: 'Published', heldLabel: 'Blocked', dash: '16.4 4.1 12.3 4.1 6.1 4.1 10.2 4.1 14.3 4.1 20.5 4.1 4.1 4.1 4.1 4.1 8.2 4.1 18.4 4.1 14.3 4.1 10.2 4.1', rot: 284, mark: 'A new draft emails supplier bank details to a new address.' }
+};
+const kindKey = this.state.kind;
+const changed = this.state.changed;
+const cur = data[kindKey];
+const on = 'height: 44px; border: 1px solid #A9D1C2; border-radius: 4px; background: #FFFFFF; color: #175747; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer';
+const off = 'height: 44px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #3E494F; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer';
+const kinds = ['server', 'skill', 'model', 'agent'].map((k) => ({
+label: data[k].label,
+pressed: k === kindKey ? 'true' : 'false',
+style: k === kindKey ? on : off,
+pick: () => this.setState({ kind: k, changed: false })
+}));
+const dots = Array.from({ length: 300 }, (_, i) => ({
+style: i === 187
+? 'display: block; aspect-ratio: 1 / 1; border-radius: 50%; background: #A8480C; box-shadow: 0 0 0 3px #FBE6D8'
+: 'display: block; aspect-ratio: 1 / 1; border-radius: 50%; background: #C9D3CF'
+}));
+return {
+kinds: kinds,
+cur: cur,
+changed: changed,
+intact: !changed,
+dots: dots,
+toggle: () => this.setState({ changed: !this.state.changed }),
+buttonLabel: changed ? 'Restore' : 'Simulate a change',
+sealLabel: changed ? 'Seal broken: what is in use no longer matches what was approved' : 'Seal intact: what is in use matches what was approved'
+};
+}
+}
+</script>
+</body>
+</html>

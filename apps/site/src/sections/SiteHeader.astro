@@ -1,0 +1,44 @@
+---
+import { Menu } from "lucide-react";
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import { SealGlyph } from "../lib/ui";
+
+const WORDMARK_HASH = "sha256:5ea1a6e17c0de4b9f2c41d07a3e8b6f9c2d5e81a";
+const cta =
+  "inline-flex h-(--av-size-control-lg) items-center rounded-control bg-action-primary-bg px-4 font-semibold text-action-primary-fg no-underline hover:bg-action-primary-bg-hover";
+---
+
+<header class="border-b border-edge bg-surface">
+  <Container class="flex items-center gap-6 py-4">
+    <a href="#top" class="flex items-center gap-2 text-site-intro font-semibold text-ink no-underline">
+      <SealGlyph hash={WORDMARK_HASH} state="intact" size="sm" label={copy.brand} decorative />
+      {copy.brand}
+    </a>
+    <nav aria-label={copy.nav.label} class="hidden gap-6 md:flex">
+      {copy.nav.links.map((l) => <a href={l.href} class="text-ink-secondary no-underline hover:text-ink">{l.label}</a>)}
+    </nav>
+    <a href="#partner" class={`ms-auto hidden sm:inline-flex ${cta}`}>{copy.cta}</a>
+    <details class="relative ms-auto md:hidden sm:ms-0">
+      <summary
+        class="flex size-(--av-size-control-lg) cursor-pointer list-none items-center justify-center rounded-control border border-edge-strong text-ink"
+        aria-label={copy.nav.menu}
+      >
+        <Menu aria-hidden="true" className="size-5" />
+      </summary>
+      <nav
+        aria-label={copy.nav.label}
+        class="absolute end-0 top-full z-(--av-z-dropdown) mt-2 flex w-64 flex-col rounded-overlay border border-edge bg-raised p-2 shadow-overlay"
+      >
+        {
+          copy.nav.links.map((l) => (
+            <a href={l.href} class="flex min-h-(--av-size-control-lg) items-center rounded-control px-3 text-ink no-underline hover:bg-hover">
+              {l.label}
+            </a>
+          ))
+        }
+        <a href="#partner" class={`mt-2 justify-center sm:hidden ${cta}`}>{copy.cta}</a>
+      </nav>
+    </details>
+  </Container>
+</header>

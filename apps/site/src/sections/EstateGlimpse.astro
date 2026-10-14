@@ -1,0 +1,46 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import SamplePill from "../components/SamplePill.astro";
+import { SealGlyph, StatusPill } from "../lib/ui";
+
+const e = copy.estate;
+const th = "px-3 py-3 text-start text-label text-ink-muted";
+---
+
+<section aria-labelledby="estate-title" class="bg-canvas" data-scene data-estate>
+  <Container class="py-(--site-section-y)">
+    <h2 id="estate-title" class="m-0 max-w-(--site-measure-h2) text-site-h2 text-ink">{e.title}</h2>
+    <div class="mt-10 overflow-x-auto rounded-overlay border border-edge bg-surface" tabindex="0" role="region" aria-labelledby="estate-title">
+      <table class="w-full min-w-180 caption-bottom border-collapse text-site-small">
+        <caption class="px-5 py-3 text-start text-body text-ink-muted">{e.caption}</caption>
+        <thead class="bg-sunken">
+          <tr>
+            <th class={`${th} w-14 ps-5`}><span class="sr-only">{e.columns.seal}</span></th>
+            <th class={th}>{e.columns.name}</th>
+            <th class={th}>{e.columns.kind}</th>
+            <th class={th}>{e.columns.status}</th>
+            <th class={`${th} pe-5`}>{e.columns.usedBy}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            e.rows.map((row, i) => (
+              <tr style={`--i: ${i}`} data-broken={row.seal === "broken" ? "" : undefined} class={row.seal === "broken" ? "border-t border-edge-subtle bg-status-held-bg" : "border-t border-edge-subtle"}>
+                <td class="px-3 py-3 ps-5">
+                  <SealGlyph hash={row.hash} state={row.seal} size="sm" label={e.sealLabels[row.seal]} />
+                </td>
+                <td class="px-3 py-3 font-semibold text-ink">{row.name}</td>
+                <td class="px-3 py-3 text-ink-secondary">{row.kind}</td>
+                <td class="px-3 py-3">
+                  {row.status === "Unmanaged" ? <StatusPill status="unmanaged" /> : <SamplePill tone={row.tone}>{row.status}</SamplePill>}
+                </td>
+                <td class="px-3 py-3 pe-5 text-ink-secondary">{row.usedBy}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>

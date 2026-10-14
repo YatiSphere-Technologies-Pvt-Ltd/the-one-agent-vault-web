@@ -1,0 +1,21 @@
+---
+// Pause control for a looping animation (WCAG 2.2.2). Revealed by the motion script only when
+// animations actually run, so it never shows with reduced motion or without JavaScript.
+import { copy } from "../content/en";
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<button
+  type="button"
+  data-motion-toggle
+  aria-pressed="false"
+  data-label-pause={copy.motion.pause}
+  data-label-play={copy.motion.play}
+  hidden
+  class={`inline-flex h-(--av-size-control-md) items-center gap-2 rounded-control border border-edge-strong px-3 text-label text-ink-secondary hover:bg-hover hover:text-ink ${className}`}
+>
+  {copy.motion.pause}
+</button>

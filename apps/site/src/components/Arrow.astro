@@ -1,0 +1,18 @@
+---
+// Flow arrow. Points along the inline axis; `stackBelow` rotates it to point down below that breakpoint.
+// The shaft carries data-flow-line so animated sections can run dashes along it.
+interface Props {
+  stackBelow?: "md" | "lg";
+  tone?: "intact" | "muted";
+}
+const { stackBelow, tone = "muted" } = Astro.props;
+const rotate = stackBelow === "lg" ? "rotate-90 lg:rotate-0 lg:rtl:rotate-180" : stackBelow === "md" ? "rotate-90 md:rotate-0 md:rtl:rotate-180" : "rtl:rotate-180";
+const stroke = tone === "intact" ? "var(--av-seal-intact)" : "var(--av-border-strong)";
+---
+
+<div aria-hidden="true" class="flex shrink-0 items-center justify-center self-center">
+  <svg width="48" height="24" viewBox="0 0 48 24" class={rotate}>
+    <path data-flow-line d="M2 12h38" fill="none" stroke={stroke} stroke-width="2"></path>
+    <path d="M32 4l8 8-8 8" fill="none" stroke={stroke} stroke-width="2"></path>
+  </svg>
+</div>

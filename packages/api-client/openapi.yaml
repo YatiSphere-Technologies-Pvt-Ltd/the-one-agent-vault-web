@@ -1,0 +1,1338 @@
+# Generated from a script during setup; edit by hand from now on.
+openapi: 3.1.0
+info:
+  title: AgentVault API (stub)
+  version: 0.1.0
+  description: Front-end contract used by the console and the MSW mocks. Replace with the real API.
+paths:
+  /api/licence:
+    get:
+      operationId: getLicence
+      responses:
+        '200':
+          description: Licence and enabled release flags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Licence'
+        default:
+          $ref: '#/components/responses/Error'
+  /api/me:
+    get:
+      operationId: getMe
+      responses:
+        '200':
+          description: Signed-in user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+        default:
+          $ref: '#/components/responses/Error'
+  /api/inbox/counts:
+    get:
+      operationId: getInboxCounts
+      responses:
+        '200':
+          description: Items waiting for the signed-in user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InboxCounts'
+        default:
+          $ref: '#/components/responses/Error'
+  /api/home:
+    get:
+      operationId: getHomeSummary
+      responses:
+        '200':
+          description: Home summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeSummary'
+        default:
+          $ref: '#/components/responses/Error'
+  /api/servers:
+    get:
+      operationId: listServers
+      responses:
+        '200':
+          description: MCP servers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: &id006
+      - &id001
+        $ref: '#/components/parameters/page'
+      - &id002
+        $ref: '#/components/parameters/pageSize'
+      - &id003
+        $ref: '#/components/parameters/q'
+      - &id004
+        $ref: '#/components/parameters/sort'
+      - &id005
+        $ref: '#/components/parameters/status'
+  /api/servers/{id}:
+    get:
+      operationId: getServer
+      responses:
+        '200':
+          description: One MCP server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerDetail'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+  /api/servers/{id}/tools:
+    get:
+      operationId: listServerTools
+      responses:
+        '200':
+          description: Tools of a server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - *id001
+      - *id002
+      - *id003
+      - *id004
+      - *id005
+  /api/servers/{id}/versions:
+    get:
+      operationId: listServerVersions
+      responses:
+        '200':
+          description: Approved versions of a server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/pageSize'
+  /api/skills:
+    get:
+      operationId: listSkills
+      responses:
+        '200':
+          description: Skills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/skills/{id}:
+    get:
+      operationId: getSkill
+      responses:
+        '200':
+          description: One skill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+  /api/skills/{id}/files:
+    get:
+      operationId: listSkillFiles
+      responses:
+        '200':
+          description: Files in a skill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillFileList'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+  /api/skills/{id}/findings:
+    get:
+      operationId: listSkillFindings
+      responses:
+        '200':
+          description: Scanner findings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindingPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - *id001
+      - *id002
+      - *id003
+      - *id004
+      - *id005
+  /api/skills/{id}/versions:
+    get:
+      operationId: listSkillVersions
+      responses:
+        '200':
+          description: Versions of a skill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillVersionList'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+  /api/reviews:
+    get:
+      operationId: listReviews
+      responses:
+        '200':
+          description: Review queue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/calls:
+    get:
+      operationId: listCalls
+      responses:
+        '200':
+          description: Tool calls
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - *id001
+      - *id002
+      - *id003
+      - *id004
+      - *id005
+      - name: serverId
+        in: query
+        schema:
+          type: string
+  /api/calls/{id}:
+    get:
+      operationId: getCall
+      responses:
+        '200':
+          description: One tool call
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallDetail'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/id'
+  /api/audit:
+    get:
+      operationId: listAuditEvents
+      responses:
+        '200':
+          description: Audit log
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEventPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/discovery/items:
+    get:
+      operationId: listDiscoveredItems
+      responses:
+        '200':
+          description: Discovered servers and skills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveredItemPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/discovery/endpoints:
+    get:
+      operationId: listEndpoints
+      responses:
+        '200':
+          description: Endpoint inventory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/catalogue:
+    get:
+      operationId: listCatalogue
+      responses:
+        '200':
+          description: Portal catalogue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogueItemPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/members:
+    get:
+      operationId: listMembers
+      responses:
+        '200':
+          description: Members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters: *id006
+  /api/notifications:
+    get:
+      operationId: listNotifications
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationPage'
+        default:
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/pageSize'
+components:
+  schemas:
+    Status:
+      type: string
+      enum:
+      - approved
+      - enabled
+      - allowed
+      - inSync
+      - resolved
+      - inReview
+      - onboarding
+      - pending
+      - escalated
+      - changesRequested
+      - heldDefinitionChanged
+      - requiresApproval
+      - warned
+      - redacted
+      - outOfDate
+      - modified
+      - acceptedRisk
+      - blocked
+      - denied
+      - error
+      - unmanaged
+      - draft
+      - disabled
+      - deprecated
+      - expired
+      - agentOffline
+      description: Matches StatusVocabulary in @agentvault/ui.
+    SealState:
+      type: string
+      enum:
+      - intact
+      - broken
+      - pending
+      - revoked
+    Licence:
+      type: object
+      required:
+      - plan
+      - releases
+      properties:
+        plan:
+          type: string
+        releases:
+          type: array
+          items:
+            type: string
+            enum:
+            - R1
+            - R2
+            - R3
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Me:
+      type: object
+      required:
+      - id
+      - name
+      - email
+      - workspaces
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+    InboxCounts:
+      type: object
+      required:
+      - reviews
+      - approvals
+      - notifications
+      properties:
+        reviews:
+          type: integer
+        approvals:
+          type: integer
+        notifications:
+          type: integer
+    Server:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - owner
+      - transport
+      - status
+      - sealState
+      - hash
+      - pinnedVersion
+      - toolCount
+      - risk
+      - gateway
+      - callsLast24h
+      - updatedAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        transport:
+          type: string
+          enum:
+          - http
+          - sse
+          - stdio
+        status:
+          $ref: '#/components/schemas/Status'
+        sealState:
+          $ref: '#/components/schemas/SealState'
+        hash:
+          type: string
+        pinnedVersion:
+          type: integer
+        toolCount:
+          type: integer
+        risk:
+          type: integer
+        gateway:
+          type: string
+        callsLast24h:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+    ServerDetail:
+      allOf:
+      - $ref: '#/components/schemas/Server'
+      - type: object
+        required:
+        - endpointUrl
+        - pinned
+        - served
+        - users
+        - createdAt
+        properties:
+          endpointUrl:
+            type: string
+          pinned:
+            $ref: '#/components/schemas/PinnedDefinition'
+          served:
+            oneOf:
+            - $ref: '#/components/schemas/ServedDefinition'
+            - type: 'null'
+          users:
+            type: integer
+          createdAt:
+            type: string
+            format: date-time
+    PinnedDefinition:
+      type: object
+      required:
+      - hash
+      - version
+      - approvedAt
+      - approvedBy
+      - toolCount
+      properties:
+        hash:
+          type: string
+        version:
+          type: integer
+        approvedAt:
+          type: string
+          format: date-time
+        approvedBy:
+          type: string
+        toolCount:
+          type: integer
+    ServedDefinition:
+      type: object
+      required:
+      - hash
+      - seenAt
+      - gateway
+      - changedCount
+      properties:
+        hash:
+          type: string
+        seenAt:
+          type: string
+          format: date-time
+        gateway:
+          type: string
+        changedCount:
+          type: integer
+    Tool:
+      type: object
+      required:
+      - name
+      - description
+      - risk
+      - status
+      - changed
+      - callsLast24h
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        risk:
+          type: integer
+        status:
+          $ref: '#/components/schemas/Status'
+        changed:
+          type: boolean
+        callsLast24h:
+          type: integer
+    Version:
+      type: object
+      required:
+      - version
+      - hash
+      - status
+      - approvedBy
+      - approvedAt
+      - toolCount
+      - summary
+      properties:
+        version:
+          type: integer
+        hash:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        approvedBy:
+          type: string
+        approvedAt:
+          type: string
+          format: date-time
+        toolCount:
+          type: integer
+        summary:
+          type: string
+    Skill:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - author
+      - source
+      - version
+      - status
+      - sealState
+      - hash
+      - risk
+      - findings
+      - installs
+      - updatedAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        author:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        sealState:
+          $ref: '#/components/schemas/SealState'
+        hash:
+          type: string
+        risk:
+          type: integer
+        findings:
+          $ref: '#/components/schemas/FindingCounts'
+        installs:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+    FindingCounts:
+      type: object
+      required:
+      - critical
+      - high
+      - medium
+      - low
+      properties:
+        critical:
+          type: integer
+        high:
+          type: integer
+        medium:
+          type: integer
+        low:
+          type: integer
+    SkillFile:
+      type: object
+      required:
+      - path
+      - size
+      - kind
+      properties:
+        path:
+          type: string
+        size:
+          type: integer
+        kind:
+          type: string
+          enum:
+          - instructions
+          - script
+          - reference
+          - asset
+    Finding:
+      type: object
+      required:
+      - id
+      - severity
+      - rule
+      - file
+      - line
+      - message
+      - status
+      properties:
+        id:
+          type: string
+        severity:
+          type: string
+          enum:
+          - critical
+          - high
+          - medium
+          - low
+        rule:
+          type: string
+        file:
+          type: string
+        line:
+          type: integer
+        message:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+    SkillVersion:
+      type: object
+      required:
+      - version
+      - hash
+      - status
+      - publishedAt
+      - publishedBy
+      - summary
+      properties:
+        version:
+          type: string
+        hash:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        publishedAt:
+          type: string
+          format: date-time
+        publishedBy:
+          type: string
+        summary:
+          type: string
+    Review:
+      type: object
+      required:
+      - id
+      - kind
+      - objectId
+      - objectName
+      - reason
+      - requestedBy
+      - requestedAt
+      - risk
+      - status
+      - assignee
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - server
+          - skill
+        objectId:
+          type: string
+        objectName:
+          type: string
+        reason:
+          type: string
+          enum:
+          - newServer
+          - definitionChange
+          - newSkill
+          - skillUpdate
+        requestedBy:
+          type: string
+        requestedAt:
+          type: string
+          format: date-time
+        risk:
+          type: integer
+        status:
+          $ref: '#/components/schemas/Status'
+        assignee:
+          type:
+          - string
+          - 'null'
+    Call:
+      type: object
+      required:
+      - id
+      - time
+      - user
+      - client
+      - serverId
+      - server
+      - tool
+      - decision
+      - latencyMs
+      - gateway
+      properties:
+        id:
+          type: string
+        time:
+          type: string
+          format: date-time
+        user:
+          type: string
+        client:
+          type: string
+        serverId:
+          type: string
+        server:
+          type: string
+        tool:
+          type: string
+        decision:
+          $ref: '#/components/schemas/Status'
+        latencyMs:
+          type: integer
+        gateway:
+          type: string
+    CallDetail:
+      allOf:
+      - $ref: '#/components/schemas/Call'
+      - type: object
+        required:
+        - request
+        - response
+        - policy
+        properties:
+          request:
+            type: string
+          response:
+            type: string
+          policy:
+            type:
+            - string
+            - 'null'
+    AuditEvent:
+      type: object
+      required:
+      - id
+      - time
+      - actor
+      - action
+      - target
+      - ip
+      properties:
+        id:
+          type: string
+        time:
+          type: string
+          format: date-time
+        actor:
+          type: string
+        action:
+          type: string
+        target:
+          type: string
+        ip:
+          type: string
+    DiscoveredItem:
+      type: object
+      required:
+      - id
+      - name
+      - kind
+      - source
+      - endpoints
+      - firstSeen
+      - status
+      - risk
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - server
+          - skill
+        source:
+          type: string
+        endpoints:
+          type: integer
+        firstSeen:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/Status'
+        risk:
+          type: integer
+    Endpoint:
+      type: object
+      required:
+      - id
+      - hostname
+      - user
+      - os
+      - agentVersion
+      - lastSeen
+      - status
+      - servers
+      - skills
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        user:
+          type: string
+        os:
+          type: string
+        agentVersion:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/Status'
+        servers:
+          type: integer
+        skills:
+          type: integer
+    CatalogueItem:
+      type: object
+      required:
+      - id
+      - kind
+      - name
+      - description
+      - owner
+      - access
+      - sealState
+      - hash
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - server
+          - skill
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        access:
+          type: string
+          enum:
+          - granted
+          - available
+          - requiresApproval
+        sealState:
+          $ref: '#/components/schemas/SealState'
+        hash:
+          type: string
+    Member:
+      type: object
+      required:
+      - id
+      - name
+      - email
+      - role
+      - groups
+      - lastActive
+      - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+          - Owner
+          - Admin
+          - Reviewer
+          - Auditor
+          - Member
+        groups:
+          type: array
+          items:
+            type: string
+        lastActive:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/Status'
+    Notification:
+      type: object
+      required:
+      - id
+      - time
+      - title
+      - body
+      - read
+      - href
+      properties:
+        id:
+          type: string
+        time:
+          type: string
+          format: date-time
+        title:
+          type: string
+        body:
+          type: string
+        read:
+          type: boolean
+        href:
+          type: string
+    HomeSummary:
+      type: object
+      required:
+      - servers
+      - skills
+      - brokenSeals
+      - pendingReviews
+      - heldCalls
+      - callsToday
+      - blockedToday
+      - attention
+      - recentCalls
+      properties:
+        servers:
+          type: integer
+        skills:
+          type: integer
+        brokenSeals:
+          type: integer
+        pendingReviews:
+          type: integer
+        heldCalls:
+          type: integer
+        callsToday:
+          type: integer
+        blockedToday:
+          type: integer
+        attention:
+          type: array
+          items:
+            $ref: '#/components/schemas/Server'
+        recentCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Call'
+    ServerPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Server'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    ToolPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    VersionPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    SkillPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    FindingPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Finding'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    ReviewPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    CallPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Call'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    AuditEventPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEvent'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    DiscoveredItemPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveredItem'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    EndpointPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Endpoint'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    CatalogueItemPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogueItem'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    MemberPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    NotificationPage:
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    SkillFileList:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillFile'
+    SkillVersionList:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillVersion'
+    Problem:
+      type: object
+      required:
+      - title
+      - requestId
+      properties:
+        title:
+          type: string
+        detail:
+          type: string
+        requestId:
+          type: string
+  parameters:
+    page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    pageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    q:
+      name: q
+      in: query
+      description: Free-text search
+      schema:
+        type: string
+    sort:
+      name: sort
+      in: query
+      description: field:asc or field:desc
+      schema:
+        type: string
+    status:
+      name: status
+      in: query
+      schema:
+        $ref: '#/components/schemas/Status'
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'

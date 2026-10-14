@@ -1,0 +1,14 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+---
+
+<footer data-theme="dark" class="bg-canvas text-ink-muted">
+  <Container class="flex flex-wrap items-center gap-6 py-6 text-body">
+    <span class="font-semibold text-ink">{copy.brand}</span>
+    <span>{copy.footer.legal}</span>
+    <nav aria-label={copy.footer.nav} class="flex flex-wrap gap-5 sm:ms-auto">
+      {copy.footer.links.map((l) => <a href={l.href} class="text-ink-secondary hover:text-ink">{l.label}</a>)}
+    </nav>
+  </Container>
+</footer>

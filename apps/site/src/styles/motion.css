@@ -1,0 +1,178 @@
+/*
+ * Landing-page motion. Restrained by design: motion only explains the product (a seal is approved,
+ * a definition changes, a call passes checks, a person approves). No bounce, shake, pulse or
+ * overshoot; short distances, standard easing, one state change at a time.
+ *
+ * Everything is scoped to html.motion, which an inline script sets only when the visitor has not
+ * asked for reduced motion. Without it (or without JavaScript) every element shows its final state.
+ *
+ * Hooks (set by src/scripts/motion.ts):
+ *   [data-reveal]            fades in once it scrolls into view ([data-inview]); --i staggers
+ *   [data-scene]             a section whose animation starts when it is in view ([data-inview])
+ *   [data-loop]              a looping scene; runs only while on screen ([data-running]) and not paused
+ */
+
+:root {
+  --site-step: calc(var(--av-motion-slow) * 2.5); /* 700 ms */
+  --site-stagger: var(--av-motion-fast); /* 120 ms */
+  --site-flow-cycle: calc(var(--av-motion-slow) * 22); /* ~6 s */
+  --site-agent-cycle: calc(var(--av-motion-slow) * 32); /* ~9 s */
+  --site-reveal-shift: 8px;
+}
+
+@keyframes site-rise {
+  from { opacity: 0; translate: 0 var(--site-reveal-shift); }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes site-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes site-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes site-seal-in {
+  from { opacity: 0; rotate: -12deg; }
+  to { opacity: 1; rotate: 0deg; }
+}
+@keyframes site-dash-flow { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+@keyframes site-ring-once {
+  from { opacity: 0.5; scale: 1; }
+  to { opacity: 0; scale: 2.2; }
+}
+
+/* ---- Generic reveal ---------------------------------------------------------------------------- */
+.motion [data-reveal]:not([data-inview]) { opacity: 0; }
+.motion [data-reveal][data-inview] {
+  animation: site-rise var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--i, 0) * var(--site-stagger));
+}
+
+/* ---- Seal: draws in once; a change is shown by the arc and crack, not by shaking ----------------- */
+.motion [data-seal-anim]:not([data-inview]) [data-seal] { opacity: 0; }
+.motion [data-seal-anim][data-inview] [data-seal] {
+  animation: site-seal-in calc(var(--site-step) * 1.5) var(--av-motion-ease-standard) both;
+}
+.motion [data-seal] [data-draw] { stroke-dasharray: 1; }
+.motion [data-seal-anim][data-inview] [data-when="intact"] [data-draw] {
+  animation: site-draw var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: var(--site-step);
+}
+/* The break replays each time the seal switches to broken (the group is re-displayed). */
+.motion [data-seal][data-state="broken"] [data-when="broken"] {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+}
+.motion [data-seal][data-state="broken"] [data-when="broken"] [data-draw] {
+  animation: site-draw var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--site-step) / 2);
+}
+.motion [data-seal][data-state="intact"] [data-when="intact"] {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+}
+.motion [data-seal-demo] [data-when]:not(svg *) {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+}
+
+/* ---- 1 in 300: the grid fades in as a diagonal wave; the rust dot arrives last ------------------- */
+.motion [data-risk-dots]:not([data-inview]) > span { opacity: 0; }
+.motion [data-risk-dots][data-inview] > span {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--i, 0) * var(--av-motion-fast) / 4);
+}
+.motion [data-risk-dots] > span[data-rust] { position: relative; }
+.motion [data-risk-dots][data-inview] > span[data-rust] {
+  animation-delay: calc(var(--site-step) * 4);
+}
+.motion [data-risk-dots] > span[data-rust]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--av-seal-broken);
+  opacity: 0;
+  pointer-events: none;
+}
+.motion [data-risk-dots][data-inview] > span[data-rust]::after {
+  animation: site-ring-once calc(var(--site-step) * 2) var(--av-motion-ease-standard) 1 both;
+  animation-delay: calc(var(--site-step) * 5);
+}
+
+/* ---- Loops: run only on screen and when not paused --------------------------------------------- */
+.motion [data-loop]:not([data-running]) *,
+.motion [data-loop][data-paused] * { animation-play-state: paused !important; }
+
+/* Arrows carry a slow, steady flow. */
+.motion [data-loop] [data-flow-line] {
+  stroke-dasharray: 6 6;
+  animation: site-dash-flow calc(var(--av-motion-slow) * 6) linear infinite;
+}
+
+/* Platform: each call passes the six checks in order (a soft tint, one at a time). */
+@keyframes site-check {
+  0%, 12%, 100% { background-color: transparent; }
+  3%, 9% { background-color: var(--av-bg-selected); }
+}
+.motion [data-platform] [data-check] {
+  animation: site-check var(--site-flow-cycle) var(--av-motion-ease-standard) infinite;
+  animation-delay: calc(var(--i, 0) * var(--site-flow-cycle) / 8);
+}
+
+/* Agent flow: work moves step by step and waits for the human approval. */
+@keyframes site-step-on {
+  0%, 12%, 100% { outline: 2px solid transparent; outline-offset: 3px; }
+  3%, 9% { outline: 2px solid var(--av-border-focus); outline-offset: 3px; }
+}
+@keyframes site-step-wait {
+  0%, 30%, 100% { outline: 2px solid transparent; outline-offset: 3px; }
+  3%, 27% { outline: 2px solid var(--av-strip-person-bg); outline-offset: 3px; }
+}
+.motion [data-agent-flow] [data-step] {
+  animation: site-step-on var(--site-agent-cycle) var(--av-motion-ease-standard) infinite;
+  animation-delay: calc(var(--i, 0) * var(--site-agent-cycle) / 8);
+}
+.motion [data-agent-flow] [data-step="wait"] { animation-name: site-step-wait; }
+.motion [data-agent-flow] [data-step="after"] {
+  animation-delay: calc((var(--i, 0) + 2) * var(--site-agent-cycle) / 8);
+}
+
+/* ---- Estate: rows arrive, then the held row shows its broken seal ------------------------------- */
+.motion [data-estate]:not([data-inview]) tbody tr { opacity: 0; }
+.motion [data-estate][data-inview] tbody tr {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--i, 0) * var(--site-stagger));
+}
+@keyframes site-row-held { from { background-color: transparent; } }
+@keyframes site-arc-fade { from { opacity: 0; } to { opacity: 1; } }
+.motion [data-estate][data-inview] tbody tr[data-broken] {
+  animation:
+    site-fade var(--site-step) var(--av-motion-ease-standard) both,
+    site-row-held var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: 0ms, calc(var(--site-step) * 2);
+}
+.motion [data-estate][data-inview] tr[data-broken] [data-part="break-arc"] {
+  animation: site-arc-fade var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--site-step) * 2);
+}
+
+/* ---- Governance loop: the three arrows draw in turn --------------------------------------------- */
+.motion [data-govern] [data-loop-arrow] { stroke-dasharray: 1; }
+.motion [data-govern]:not([data-inview]) [data-loop-arrow] { stroke-dashoffset: 1; }
+.motion [data-govern][data-inview] [data-loop-arrow] {
+  animation: site-draw calc(var(--site-step) * 1.5) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--site-step) + var(--i, 0) * var(--site-step) * 1.5);
+}
+
+/* ---- Approval strips: fade in one after another -------------------------------------------------- */
+.motion [data-strips]:not([data-inview]) > li { opacity: 0; }
+.motion [data-strips][data-inview] > li { animation: site-rise var(--site-step) var(--av-motion-ease-standard) both; }
+.motion [data-strips][data-inview] > li:nth-child(2) { animation-delay: calc(var(--site-stagger) * 2); }
+.motion [data-strips][data-inview] > li:nth-child(3) { animation-delay: calc(var(--site-stagger) * 4); }
+
+/* ---- Roadmap: the rail extends under First; markers fade in ------------------------------------- */
+.motion [data-rail] { transform-origin: left center; }
+[dir="rtl"].motion [data-rail] { transform-origin: right center; }
+.motion [data-roadmap]:not([data-inview]) [data-rail] { scale: 0 1; }
+.motion [data-roadmap][data-inview] [data-rail] {
+  transition: scale calc(var(--site-step) * 2) var(--av-motion-ease-standard);
+  scale: 1 1;
+}
+.motion [data-roadmap]:not([data-inview]) [data-marker] { opacity: 0; }
+.motion [data-roadmap][data-inview] [data-marker] {
+  animation: site-fade var(--site-step) var(--av-motion-ease-standard) both;
+  animation-delay: calc(var(--i, 0) * var(--site-step) / 2);
+}

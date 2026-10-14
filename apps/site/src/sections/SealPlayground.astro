@@ -1,0 +1,70 @@
+---
+// Seal playground: edit a tool definition and watch the live seal (drawn from its SHA-256) change
+// and break against the pinned, approved seal. Hashing runs in the browser with Web Crypto.
+import { createHash } from "node:crypto";
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import SamplePill from "../components/SamplePill.astro";
+import SiteSeal from "../components/SiteSeal.astro";
+
+const p = copy.playground;
+const pinnedHash = `sha256:${createHash("sha256").update(p.definition, "utf8").digest("hex")}`;
+const short = (h: string) => `${h.slice(0, 13)}…${h.slice(-4)}`;
+const panel = "flex flex-col items-center gap-3 rounded-overlay border p-5 text-center";
+---
+
+<section aria-labelledby="playground-title" class="bg-surface" data-scene>
+  <Container class="py-(--site-section-y)">
+    <h2 id="playground-title" class="m-0 max-w-(--site-measure-h2) text-site-h2 text-ink">{p.title}</h2>
+    <p class="mt-5 mb-0 max-w-(--site-measure-lead) text-site-intro text-ink-secondary">{p.lead}</p>
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-2" data-playground data-pinned={pinnedHash} data-definition={p.definition}>
+      <div class="flex flex-col gap-2">
+        <label for="playground-editor" class="text-label text-ink">{p.editorLabel}</label>
+        <textarea
+          id="playground-editor"
+          rows="10"
+          spellcheck="false"
+          readonly
+          aria-describedby="playground-help"
+          class="w-full resize-y rounded-overlay border border-edge-strong bg-sunken p-4 font-mono text-mono text-ink"
+          >{p.definition}</textarea
+        >
+        <p id="playground-help" class="m-0 text-body-sm text-ink-muted" data-js-only hidden>{p.editorHelp}</p>
+        <noscript><p class="m-0 text-body-sm text-ink-muted">{p.noScript}</p></noscript>
+        <div>
+          <button
+            type="button"
+            data-restore
+            hidden
+            class="mt-2 inline-flex h-(--av-size-control-md) items-center rounded-control border border-action-secondary-border bg-action-secondary-bg px-4 text-label font-semibold text-action-secondary-fg hover:bg-action-secondary-bg-hover disabled:cursor-not-allowed disabled:text-ink-disabled"
+          >
+            {p.restore}
+          </button>
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class={`${panel} border-edge bg-sunken`}>
+          <h3 class="m-0 text-label text-ink-muted">{p.pinned}</h3>
+          <SiteSeal hash={pinnedHash} state="intact" sizeClass="size-(--site-diagram-seal)" label={p.pinnedSeal} />
+          <code class="font-mono text-mono-sm text-ink-secondary" title={pinnedHash}>{short(pinnedHash)}</code>
+        </div>
+        <div class={`${panel} border-edge bg-surface`} data-live-panel>
+          <h3 class="m-0 text-label text-ink-muted">{p.live}</h3>
+          <SiteSeal hash={pinnedHash} state="intact" sizeClass="size-(--site-diagram-seal)" label={p.sealIntact} id="playground-seal" />
+          <code class="font-mono text-mono-sm text-ink-secondary" data-live-hash title={pinnedHash}>{short(pinnedHash)}</code>
+          <div aria-live="polite" data-status data-label-intact={p.sealIntact} data-label-broken={p.sealBroken}>
+            <span data-show="intact"><SamplePill tone="success">{p.matches}</SamplePill></span>
+            <span data-show="broken" hidden><SamplePill tone="held">{p.held}</SamplePill></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  import { initPlayground } from "../scripts/playground";
+  initPlayground();
+</script>

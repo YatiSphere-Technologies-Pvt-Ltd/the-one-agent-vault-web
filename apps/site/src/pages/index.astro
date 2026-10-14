@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import AgentFlow from "../sections/AgentFlow.astro";
+import DecisionStrips from "../sections/DecisionStrips.astro";
+import DeploymentOptions from "../sections/DeploymentOptions.astro";
+import EstateGlimpse from "../sections/EstateGlimpse.astro";
+import GovernanceLoop from "../sections/GovernanceLoop.astro";
+import Hero from "../sections/Hero.astro";
+import PartnerCta from "../sections/PartnerCta.astro";
+import PlatformDiagram from "../sections/PlatformDiagram.astro";
+import RiskDots from "../sections/RiskDots.astro";
+import RoadmapRail from "../sections/RoadmapRail.astro";
+import SealPlayground from "../sections/SealPlayground.astro";
+import SiteFooter from "../sections/SiteFooter.astro";
+import SiteHeader from "../sections/SiteHeader.astro";
+---
+
+<Base>
+  <SiteHeader />
+  <main id="main" tabindex="-1" class="outline-none">
+    <Hero />
+    <RiskDots />
+    <PlatformDiagram />
+    <SealPlayground />
+    <EstateGlimpse />
+    <GovernanceLoop />
+    <AgentFlow />
+    <DecisionStrips />
+    <RoadmapRail />
+    <DeploymentOptions />
+    <PartnerCta />
+  </main>
+  <SiteFooter />
+</Base>

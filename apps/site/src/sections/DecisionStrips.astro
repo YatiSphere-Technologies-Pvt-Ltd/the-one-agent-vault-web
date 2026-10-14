@@ -1,0 +1,20 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import { DecisionStrip } from "../components/DecisionStrip";
+
+const d = copy.decide;
+---
+
+<section aria-labelledby="decide-title" data-theme="dark" class="bg-canvas text-ink">
+  <Container class="flex flex-wrap items-center gap-12 py-(--site-section-y)">
+    <h2 id="decide-title" class="m-0 min-w-0 flex-1 basis-80 text-site-h2">{d.title}</h2>
+    <ul aria-label={d.listLabel} data-scene data-strips class="m-0 flex min-w-0 flex-wide basis-120 list-none flex-col gap-2 p-0">
+      {
+        d.strips.map((s) => (
+          <DecisionStrip state={s.state} time={s.time} note={s.note} tool={s.tool} reason={s.reason} />
+        ))
+      }
+    </ul>
+  </Container>
+</section>

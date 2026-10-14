@@ -1,0 +1,289 @@
+{
+  "$description": "AgentVault semantic colours, dark theme. Components use only these.",
+  "color": {
+    "bg-canvas": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "bg-surface": {
+      "$type": "color",
+      "$value": "{color.night.850}"
+    },
+    "bg-raised": {
+      "$type": "color",
+      "$value": "{color.night.800}"
+    },
+    "bg-sunken": {
+      "$type": "color",
+      "$value": "{color.night.800}"
+    },
+    "bg-hover": {
+      "$type": "color",
+      "$value": "{color.night.800}"
+    },
+    "bg-selected": {
+      "$type": "color",
+      "$value": "{color.tint-dark.seal}"
+    },
+    "bg-inverse": {
+      "$type": "color",
+      "$value": "{color.night.50}"
+    },
+    "border-subtle": {
+      "$type": "color",
+      "$value": "{color.night.750}"
+    },
+    "border-default": {
+      "$type": "color",
+      "$value": "{color.night.700}"
+    },
+    "border-strong": {
+      "$type": "color",
+      "$value": "{color.night.500}"
+    },
+    "border-focus": {
+      "$type": "color",
+      "$value": "{color.seal.400}"
+    },
+    "text-primary": {
+      "$type": "color",
+      "$value": "{color.night.50}"
+    },
+    "text-secondary": {
+      "$type": "color",
+      "$value": "{color.night.100}"
+    },
+    "text-muted": {
+      "$type": "color",
+      "$value": "{color.night.300}"
+    },
+    "text-disabled": {
+      "$type": "color",
+      "$value": "{color.night.500}"
+    },
+    "text-inverse": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "text-link": {
+      "$type": "color",
+      "$value": "{color.seal.300}"
+    },
+    "text-link-hover": {
+      "$type": "color",
+      "$value": "{color.seal.200}"
+    },
+    "action-primary-bg": {
+      "$type": "color",
+      "$value": "{color.seal.400}"
+    },
+    "action-primary-bg-hover": {
+      "$type": "color",
+      "$value": "{color.seal.300}"
+    },
+    "action-primary-bg-pressed": {
+      "$type": "color",
+      "$value": "{color.seal.200}"
+    },
+    "action-primary-fg": {
+      "$type": "color",
+      "$value": "{color.seal.950}"
+    },
+    "action-secondary-bg": {
+      "$type": "color",
+      "$value": "{color.night.850}"
+    },
+    "action-secondary-bg-hover": {
+      "$type": "color",
+      "$value": "{color.night.800}"
+    },
+    "action-secondary-border": {
+      "$type": "color",
+      "$value": "{color.night.500}"
+    },
+    "action-secondary-fg": {
+      "$type": "color",
+      "$value": "{color.night.50}"
+    },
+    "action-danger-bg": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
+    "action-danger-bg-hover": {
+      "$type": "color",
+      "$value": "{color.red.200}"
+    },
+    "action-danger-fg": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "status-success-fg": {
+      "$type": "color",
+      "$value": "{color.seal.300}"
+    },
+    "status-success-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.seal}"
+    },
+    "status-success-border": {
+      "$type": "color",
+      "$value": "{color.seal.700}"
+    },
+    "status-success-solid": {
+      "$type": "color",
+      "$value": "{color.seal.400}"
+    },
+    "status-held-fg": {
+      "$type": "color",
+      "$value": "{color.rust.300}"
+    },
+    "status-held-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.rust}"
+    },
+    "status-held-border": {
+      "$type": "color",
+      "$value": "{color.rust.700}"
+    },
+    "status-held-solid": {
+      "$type": "color",
+      "$value": "{color.rust.400}"
+    },
+    "status-danger-fg": {
+      "$type": "color",
+      "$value": "{color.red.200}"
+    },
+    "status-danger-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.red}"
+    },
+    "status-danger-border": {
+      "$type": "color",
+      "$value": "{color.red.700}"
+    },
+    "status-danger-solid": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
+    "status-info-fg": {
+      "$type": "color",
+      "$value": "{color.blue.200}"
+    },
+    "status-info-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.blue}"
+    },
+    "status-info-border": {
+      "$type": "color",
+      "$value": "{color.blue.700}"
+    },
+    "status-info-solid": {
+      "$type": "color",
+      "$value": "{color.blue.200}"
+    },
+    "status-neutral-fg": {
+      "$type": "color",
+      "$value": "{color.night.100}"
+    },
+    "status-neutral-bg": {
+      "$type": "color",
+      "$value": "{color.night.800}"
+    },
+    "status-neutral-border": {
+      "$type": "color",
+      "$value": "{color.night.700}"
+    },
+    "status-neutral-solid": {
+      "$type": "color",
+      "$value": "{color.night.300}"
+    },
+    "risk-low-fg": {
+      "$type": "color",
+      "$value": "{color.seal.300}"
+    },
+    "risk-low-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.seal}"
+    },
+    "risk-medium-fg": {
+      "$type": "color",
+      "$value": "{color.ochre.300}"
+    },
+    "risk-medium-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.ochre}"
+    },
+    "risk-high-fg": {
+      "$type": "color",
+      "$value": "{color.rust.300}"
+    },
+    "risk-high-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.rust}"
+    },
+    "risk-critical-fg": {
+      "$type": "color",
+      "$value": "{color.red.200}"
+    },
+    "risk-critical-bg": {
+      "$type": "color",
+      "$value": "{color.tint-dark.red}"
+    },
+    "seal-intact": {
+      "$type": "color",
+      "$value": "{color.seal.400}"
+    },
+    "seal-broken": {
+      "$type": "color",
+      "$value": "{color.rust.400}"
+    },
+    "seal-pending": {
+      "$type": "color",
+      "$value": "{color.night.300}"
+    },
+    "seal-revoked": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
+    "seal-core-intact": {
+      "$type": "color",
+      "$value": "{color.tint-dark.seal}"
+    },
+    "seal-core-broken": {
+      "$type": "color",
+      "$value": "{color.tint-dark.rust}"
+    },
+    "strip-person-bg": {
+      "$type": "color",
+      "$value": "{color.ochre.400}"
+    },
+    "strip-person-fg": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "strip-policy-bg": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
+    "strip-policy-fg": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "strip-approved-bg": {
+      "$type": "color",
+      "$value": "{color.seal.400}"
+    },
+    "strip-approved-fg": {
+      "$type": "color",
+      "$value": "{color.night.900}"
+    },
+    "strip-closed-bg": {
+      "$type": "color",
+      "$value": "{color.night.700}"
+    },
+    "strip-closed-fg": {
+      "$type": "color",
+      "$value": "{color.night.50}"
+    }
+  }
+}

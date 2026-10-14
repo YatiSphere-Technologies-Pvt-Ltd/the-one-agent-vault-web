@@ -1,0 +1,63 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import SiteSeal from "../components/SiteSeal.astro";
+
+const f = copy.partner;
+const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT ?? "";
+const connected = endpoint.length > 0;
+const input =
+  "h-12 w-full rounded-control border border-edge-strong bg-surface px-3 text-site-body text-ink placeholder:text-ink-muted aria-invalid:border-status-danger-solid";
+---
+
+<section id="partner" aria-labelledby="partner-title" data-theme="dark" class="bg-surface text-ink">
+  <Container class="flex flex-wrap items-center gap-12 py-(--site-section-y)">
+    <div class="flex min-w-0 flex-1 basis-96 items-center gap-6" data-seal-anim>
+      <SiteSeal hash="sha256:9f2c41d0b7a3e5c8f1d24a6b90e7c3f5d81e2a4c6b8d0f1e3a5c7e9b2d4fe81a" state="intact" sizeClass="size-(--site-cta-seal)" />
+      <h2 id="partner-title" class="m-0 text-site-h2">{f.title}</h2>
+    </div>
+    <form
+      class="grid min-w-0 flex-1 basis-120 grid-cols-1 gap-4 sm:grid-cols-2"
+      novalidate
+      data-partner-form
+      data-endpoint={endpoint}
+      data-msg-email={f.emailInvalid}
+      data-msg-company={f.companyRequired}
+      data-msg-success={f.success}
+      data-msg-error={f.error}
+      data-msg-sending={f.sending}
+      aria-describedby="partner-status"
+    >
+      <div class="flex flex-col gap-1">
+        <label for="partner-email" class="text-body text-ink-secondary">{f.email}</label>
+        <input id="partner-email" name="email" type="email" autocomplete="email" required class={input} aria-describedby="partner-email-error" />
+        <p id="partner-email-error" class="m-0 text-body-sm text-status-danger-fg" hidden></p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="partner-company" class="text-body text-ink-secondary">{f.company}</label>
+        <input id="partner-company" name="company" type="text" autocomplete="organization" required class={input} aria-describedby="partner-company-error" />
+        <p id="partner-company-error" class="m-0 text-body-sm text-status-danger-fg" hidden></p>
+      </div>
+      <!-- Honeypot: hidden from people and assistive technology; bots fill it in. -->
+      <div class="sr-only" aria-hidden="true">
+        <label for="partner-website">{f.honeypot}</label>
+        <input id="partner-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+      <button
+        type="submit"
+        disabled={!connected}
+        class="col-span-full h-13 rounded-control bg-action-primary-bg text-site-intro font-semibold text-action-primary-fg hover:bg-action-primary-bg-hover disabled:cursor-not-allowed disabled:bg-raised disabled:text-ink-disabled"
+      >
+        {f.submit}
+      </button>
+      <p id="partner-status" role="status" class="col-span-full m-0 text-body text-ink-secondary empty:hidden">
+        {!connected && import.meta.env.DEV ? f.notConnected : ""}
+      </p>
+    </form>
+  </Container>
+</section>
+
+<script>
+  import { initPartnerForm } from "../scripts/partner-form";
+  initPartnerForm();
+</script>

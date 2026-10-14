@@ -1,0 +1,66 @@
+---
+import { ArrowDown } from "lucide-react";
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+
+const g = copy.govern;
+const [approve, enforce, prove] = g.steps;
+const node = "rounded-panel border border-edge bg-surface px-4 py-3 text-center";
+---
+
+<section id="govern" aria-labelledby="govern-title" class="bg-surface" data-scene data-govern>
+  <Container class="flex flex-wrap items-center gap-12 py-(--site-section-y)">
+    <div class="min-w-0 flex-1 basis-80">
+      <h2 id="govern-title" class="m-0 max-w-(--site-measure-h2-short) text-site-h2 text-ink">{g.title}</h2>
+      <p class="mt-5 mb-0 max-w-(--site-measure-intro) text-site-intro text-ink-secondary">{g.lead}</p>
+      <ul class="m-0 mt-6 flex list-none flex-wrap gap-2 p-0 text-body">
+        {g.frameworks.map((f) => <li class="rounded-pill border border-edge px-3 py-1 text-ink">{f}</li>)}
+      </ul>
+    </div>
+
+    <div class="flex min-w-0 flex-1 basis-96 justify-center">
+      <!-- Loop: three nodes around a seal (640 px and up). -->
+      <ol class="relative m-0 hidden aspect-square w-full max-w-(--site-loop-max) list-none p-0 sm:block">
+        <svg viewBox="0 0 480 480" aria-hidden="true" class="absolute inset-0 size-full rtl:-scale-x-100">
+          <defs>
+            <marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 0L10 5L0 10z" fill="var(--av-seal-intact)"></path>
+            </marker>
+          </defs>
+          <path data-loop-arrow pathLength="1" style="--i: 0" d="M 330 92 A 170 170 0 0 1 400 330" fill="none" stroke="var(--av-seal-intact)" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+          <path data-loop-arrow pathLength="1" style="--i: 1" d="M 330 420 A 170 170 0 0 1 150 420" fill="none" stroke="var(--av-seal-intact)" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+          <path data-loop-arrow pathLength="1" style="--i: 2" d="M 80 330 A 170 170 0 0 1 150 92" fill="none" stroke="var(--av-seal-intact)" stroke-width="2.5" marker-end="url(#loop-arrow)"></path>
+          <circle cx="240" cy="250" r="54" fill="var(--av-seal-core-intact)" stroke="var(--av-seal-intact)" stroke-width="1.5"></circle>
+          <circle cx="240" cy="250" r="40" fill="none" stroke="var(--av-seal-intact)" stroke-width="7" stroke-dasharray="16.4 4.1 12.3 4.1 6.1 4.1 10.2 4.1 14.3 4.1 20.5 4.1 4.1 4.1 4.1 4.1 8.2 4.1 18.4 4.1 14.3 4.1 10.2 4.1"></circle>
+        </svg>
+        <li data-reveal style="--i: 1" class={`absolute inset-x-0 top-2 mx-auto w-1/2 ${node}`}>
+          <div class="font-semibold text-ink">{approve.title}</div><div class="text-body text-ink-muted">{approve.body}</div>
+        </li>
+        <li data-reveal style="--i: 6" class={`absolute end-0 bottom-16 w-2/5 ${node}`}>
+          <div class="font-semibold text-ink">{enforce.title}</div><div class="text-body text-ink-muted">{enforce.body}</div>
+        </li>
+        <li data-reveal style="--i: 11" class={`absolute start-0 bottom-16 w-2/5 ${node}`}>
+          <div class="font-semibold text-ink">{prove.title}</div><div class="text-body text-ink-muted">{prove.body}</div>
+        </li>
+      </ol>
+      <!-- Below 640 px: a vertical three-step list. -->
+      <ol class="m-0 flex w-full list-none flex-col items-stretch gap-2 p-0 sm:hidden">
+        {
+          g.steps.map((step, i) => (
+            <>
+              <li class={node}>
+                <div class="font-semibold text-ink">{step.title}</div>
+                <div class="text-body text-ink-muted">{step.body}</div>
+              </li>
+              {i < g.steps.length - 1 && (
+                <li aria-hidden="true" class="flex justify-center text-seal-intact">
+                  <ArrowDown className="size-6" />
+                </li>
+              )}
+            </>
+          ))
+        }
+      </ol>
+    </div>
+  </Container>
+</section>

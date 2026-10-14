@@ -1,0 +1,380 @@
+{
+  "$description": "AgentVault foundation tokens: type, space, radius, shadow, motion, size, z-index, breakpoints.",
+  "font": {
+    "family": {
+      "sans": {
+        "$value": "\"IBM Plex Sans\", system-ui, -apple-system, \"Segoe UI\", sans-serif"
+      },
+      "mono": {
+        "$value": "\"IBM Plex Mono\", ui-monospace, \"Cascadia Mono\", monospace"
+      },
+      "arabic": {
+        "$value": "\"IBM Plex Sans Arabic\", \"IBM Plex Sans\", sans-serif"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      }
+    }
+  },
+  "text": {
+    "display": {
+      "size": {
+        "$value": "32px"
+      },
+      "line": {
+        "$value": "40px"
+      },
+      "weight": {
+        "$value": 600
+      },
+      "tracking": {
+        "$value": "-0.01em"
+      }
+    },
+    "title-1": {
+      "size": {
+        "$value": "28px"
+      },
+      "line": {
+        "$value": "36px"
+      },
+      "weight": {
+        "$value": 600
+      },
+      "tracking": {
+        "$value": "-0.005em"
+      }
+    },
+    "title-2": {
+      "size": {
+        "$value": "20px"
+      },
+      "line": {
+        "$value": "28px"
+      },
+      "weight": {
+        "$value": 600
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "title-3": {
+      "size": {
+        "$value": "16px"
+      },
+      "line": {
+        "$value": "24px"
+      },
+      "weight": {
+        "$value": 600
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "body": {
+      "size": {
+        "$value": "14px"
+      },
+      "line": {
+        "$value": "20px"
+      },
+      "weight": {
+        "$value": 400
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "body-sm": {
+      "size": {
+        "$value": "13px"
+      },
+      "line": {
+        "$value": "18px"
+      },
+      "weight": {
+        "$value": 400
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "label": {
+      "size": {
+        "$value": "13px"
+      },
+      "line": {
+        "$value": "18px"
+      },
+      "weight": {
+        "$value": 500
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "caption": {
+      "size": {
+        "$value": "12px"
+      },
+      "line": {
+        "$value": "16px"
+      },
+      "weight": {
+        "$value": 400
+      },
+      "tracking": {
+        "$value": "0.005em"
+      }
+    },
+    "mono": {
+      "size": {
+        "$value": "13px"
+      },
+      "line": {
+        "$value": "20px"
+      },
+      "weight": {
+        "$value": 400
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    },
+    "mono-sm": {
+      "size": {
+        "$value": "12px"
+      },
+      "line": {
+        "$value": "16px"
+      },
+      "weight": {
+        "$value": 400
+      },
+      "tracking": {
+        "$value": "0"
+      }
+    }
+  },
+  "space": {
+    "0": {
+      "$value": "0px"
+    },
+    "0-5": {
+      "$value": "2px"
+    },
+    "1": {
+      "$value": "4px"
+    },
+    "2": {
+      "$value": "8px"
+    },
+    "3": {
+      "$value": "12px"
+    },
+    "4": {
+      "$value": "16px"
+    },
+    "5": {
+      "$value": "20px"
+    },
+    "6": {
+      "$value": "24px"
+    },
+    "8": {
+      "$value": "32px"
+    },
+    "10": {
+      "$value": "40px"
+    },
+    "12": {
+      "$value": "48px"
+    },
+    "16": {
+      "$value": "64px"
+    }
+  },
+  "radius": {
+    "none": {
+      "$value": "0px"
+    },
+    "control": {
+      "$value": "4px"
+    },
+    "panel": {
+      "$value": "6px"
+    },
+    "overlay": {
+      "$value": "8px"
+    },
+    "pill": {
+      "$value": "9999px"
+    }
+  },
+  "border-width": {
+    "default": {
+      "$value": "1px"
+    },
+    "focus": {
+      "$value": "2px"
+    }
+  },
+  "shadow": {
+    "overlay": {
+      "$value": "0 1px 2px rgba(23, 32, 36, 0.06), 0 4px 12px rgba(23, 32, 36, 0.10)"
+    },
+    "dialog": {
+      "$value": "0 16px 40px rgba(23, 32, 36, 0.18)"
+    },
+    "overlay-dark": {
+      "$value": "0 1px 2px rgba(0, 0, 0, 0.40), 0 4px 12px rgba(0, 0, 0, 0.50)"
+    },
+    "dialog-dark": {
+      "$value": "0 16px 40px rgba(0, 0, 0, 0.60)"
+    }
+  },
+  "motion": {
+    "fast": {
+      "$value": "120ms"
+    },
+    "base": {
+      "$value": "200ms"
+    },
+    "slow": {
+      "$value": "280ms"
+    },
+    "ease-standard": {
+      "$value": "cubic-bezier(0.2, 0, 0, 1)"
+    },
+    "ease-exit": {
+      "$value": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "size": {
+    "control-sm": {
+      "$value": "32px"
+    },
+    "control-md": {
+      "$value": "36px"
+    },
+    "control-lg": {
+      "$value": "44px"
+    },
+    "row-compact": {
+      "$value": "36px"
+    },
+    "row-comfortable": {
+      "$value": "44px"
+    },
+    "topbar": {
+      "$value": "56px"
+    },
+    "nav": {
+      "$value": "216px"
+    },
+    "nav-collapsed": {
+      "$value": "64px"
+    },
+    "drawer": {
+      "$value": "480px"
+    },
+    "drawer-wide": {
+      "$value": "720px"
+    },
+    "dialog": {
+      "$value": "480px"
+    },
+    "dialog-form": {
+      "$value": "640px"
+    },
+    "content-max": {
+      "$value": "1440px"
+    },
+    "form-max": {
+      "$value": "720px"
+    },
+    "portal-max": {
+      "$value": "1120px"
+    },
+    "decision-panel": {
+      "$value": "400px"
+    },
+    "icon-sm": {
+      "$value": "16px"
+    },
+    "icon-md": {
+      "$value": "20px"
+    },
+    "strip-bay": {
+      "$value": "112px"
+    },
+    "seal-xs": {
+      "$value": "16px"
+    },
+    "seal-sm": {
+      "$value": "24px"
+    },
+    "seal-md": {
+      "$value": "40px"
+    },
+    "seal-lg": {
+      "$value": "72px"
+    },
+    "seal-xl": {
+      "$value": "96px"
+    }
+  },
+  "z": {
+    "base": {
+      "$value": 0
+    },
+    "sticky": {
+      "$value": 10
+    },
+    "nav": {
+      "$value": 20
+    },
+    "dropdown": {
+      "$value": 30
+    },
+    "drawer": {
+      "$value": 40
+    },
+    "dialog": {
+      "$value": 50
+    },
+    "toast": {
+      "$value": 60
+    },
+    "tooltip": {
+      "$value": 70
+    }
+  },
+  "breakpoint": {
+    "sm": {
+      "$value": "640px"
+    },
+    "md": {
+      "$value": "768px"
+    },
+    "lg": {
+      "$value": "1024px"
+    },
+    "xl": {
+      "$value": "1280px"
+    },
+    "2xl": {
+      "$value": "1536px"
+    }
+  }
+}

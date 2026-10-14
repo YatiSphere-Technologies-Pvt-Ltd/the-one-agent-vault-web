@@ -1,0 +1,55 @@
+---
+// Seal larger than any SealGlyph size (hero 240/180 px, diagram 120 px, CTA 112 px).
+// Rendered from the same sealGeometry() so the pattern matches the console exactly.
+import { sealGeometry } from "../lib/ui";
+
+interface Props {
+  hash: string;
+  state: "intact" | "broken";
+  /** Class that sets the size, e.g. "size-(--site-hero-seal)". */
+  sizeClass: string;
+  label?: string;
+  id?: string;
+}
+const { hash, state, sizeClass, label, id } = Astro.props;
+const g = sealGeometry(hash, "broken", 240);
+const a11y = label ? { role: "img", "aria-label": label } : { "aria-hidden": "true" };
+---
+
+<svg viewBox={g.viewBox} class={`shrink-0 ${sizeClass}`} fill="none" data-seal data-state={state} id={id} {...a11y}>
+  <circle
+    data-ring
+    cx="36"
+    cy="36"
+    r={g.ringRadius}
+    stroke="var(--av-seal-intact)"
+    stroke-width={g.ringWidth}
+    stroke-dasharray={g.dashArray}
+    transform={`rotate(${g.rotation} 36 36)`}></circle>
+  <g data-when="intact">
+    <circle data-core cx="36" cy="36" r={g.coreRadius} fill="var(--av-seal-core-intact)" stroke="var(--av-seal-intact)" stroke-width="1.5"></circle>
+    <path data-draw d="M30 36l4 4 8-9" pathLength="1" stroke="var(--av-seal-intact)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+  <g data-when="broken">
+    <circle
+      data-break-arc
+      cx="36"
+      cy="36"
+      r={g.ringRadius}
+      stroke="var(--av-seal-broken)"
+      stroke-width={g.ringWidth}
+      stroke-dasharray={g.breakArc?.dashArray}
+      stroke-dashoffset={g.breakArc?.dashOffset}
+      transform="rotate(-90 36 36)"></circle>
+    <path data-draw d={g.crackPath} pathLength="1" stroke="var(--av-seal-broken)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <circle data-core cx="36" cy="36" r={g.coreRadius} fill="var(--av-seal-core-broken)" stroke="var(--av-seal-broken)" stroke-width="1.5"></circle>
+    <path data-draw d="M31 31l10 10M41 31l-10 10" pathLength="1" stroke="var(--av-seal-broken)" stroke-width="2.5" stroke-linecap="round"></path>
+  </g>
+</svg>
+
+<style>
+  [data-seal][data-state="intact"] [data-when="broken"],
+  [data-seal][data-state="broken"] [data-when="intact"] {
+    display: none;
+  }
+</style>

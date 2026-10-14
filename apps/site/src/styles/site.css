@@ -1,0 +1,79 @@
+/*
+ * Marketing site styles. Colours, radius, borders, motion and the base type come from the shared
+ * tokens via @agentvault/ui. The marketing type scale, section spacing and large seal sizes below
+ * are a documented site-only exception: the console scale tops out at 32 px.
+ */
+@import "@agentvault/ui/styles.css";
+@import "./motion.css";
+
+@theme {
+  --text-site-hero: clamp(46px, 6.4vw, 88px);
+  --text-site-hero--line-height: 0.98;
+  --text-site-hero--letter-spacing: -0.035em;
+  --text-site-hero--font-weight: 600;
+  --text-site-stat: clamp(64px, 9vw, 120px);
+  --text-site-stat--line-height: 1;
+  --text-site-stat--letter-spacing: -0.04em;
+  --text-site-stat--font-weight: 600;
+  --text-site-h2: clamp(32px, 4vw, 48px);
+  --text-site-h2--line-height: 1.1;
+  --text-site-h2--letter-spacing: -0.02em;
+  --text-site-h2--font-weight: 600;
+  --text-site-h3: 24px;
+  --text-site-h3--line-height: 32px;
+  --text-site-h3--font-weight: 600;
+  --text-site-lead: 20px;
+  --text-site-lead--line-height: 30px;
+  --text-site-intro: 18px;
+  --text-site-intro--line-height: 28px;
+  --text-site-body: 16px;
+  --text-site-body--line-height: 26px;
+  --text-site-small: 15px;
+  --text-site-small--line-height: 24px;
+}
+
+:root {
+  --site-section-y: clamp(64px, 8vw, 96px);
+  --site-hero-seal: 180px;
+  --site-diagram-seal: 120px;
+  --site-cta-seal: 112px;
+  --site-loop-max: 480px;
+  /* Line lengths from the reference design. */
+  --site-measure-hero: 9ch;
+  --site-measure-lead: 26em;
+  --site-measure-stat: 18em;
+  --site-measure-h2: 18ch;
+  --site-measure-h2-narrow: 16ch;
+  --site-measure-h2-short: 14ch;
+  --site-measure-intro: 24em;
+  --site-measure-note: 36em;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-hero-seal: 240px;
+  }
+}
+
+/* The platform diagram's centre column is wider than the two side columns. */
+@utility flex-wide {
+  flex: 1.4 1 0%;
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+    line-height: 26px;
+    background: var(--av-bg-surface);
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+

@@ -1,0 +1,95 @@
+---
+import { copy } from "../content/en";
+import Container from "../components/Container.astro";
+import SamplePill from "../components/SamplePill.astro";
+import SiteSeal from "../components/SiteSeal.astro";
+import { sealGeometry } from "../lib/ui";
+
+const kinds = copy.hero.kinds;
+const first = kinds[0];
+// Pre-computed seal geometry per kind; the demo script only swaps attributes.
+const demoData = kinds.map((k) => {
+  const g = sealGeometry(k.hash, "intact", 240);
+  return { key: k.key, name: k.name, type: k.type, okLabel: k.okLabel, heldLabel: k.heldLabel, mark: k.mark, dash: g.dashArray, rotation: g.rotation };
+});
+const btnPrimary =
+  "inline-flex h-12 items-center rounded-control bg-action-primary-bg px-5 font-semibold text-action-primary-fg no-underline hover:bg-action-primary-bg-hover";
+const btnSecondary =
+  "inline-flex h-12 items-center rounded-control border border-action-secondary-border bg-action-secondary-bg px-5 font-medium text-action-secondary-fg no-underline hover:bg-action-secondary-bg-hover";
+---
+
+<section aria-labelledby="hero-title" class="bg-canvas">
+  <Container class="flex flex-wrap items-center gap-12 pt-16 pb-(--site-section-y)">
+    <div class="min-w-0 flex-1 basis-96">
+      <h1 id="hero-title" class="m-0 max-w-(--site-measure-hero) text-site-hero text-ink">{copy.hero.title}</h1>
+      <p class="mt-6 mb-0 max-w-(--site-measure-lead) text-site-lead text-ink-secondary">{copy.hero.lead}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#partner" class={btnPrimary}>{copy.cta}</a>
+        <a href="#platform" class={btnSecondary}>{copy.hero.secondary}</a>
+      </div>
+    </div>
+
+    <div class="min-w-0 flex-1 basis-120 rounded-overlay border border-edge bg-surface p-6" data-seal-demo={JSON.stringify(demoData)}>
+      <div role="tablist" aria-label={copy.hero.tablist} class="grid grid-cols-2 gap-1 rounded-panel border border-edge-subtle bg-sunken p-1 sm:grid-cols-4">
+        {
+          kinds.map((k, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`seal-tab-${k.key}`}
+              aria-controls="seal-panel"
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? 0 : -1}
+              data-kind={k.key}
+              class="h-(--av-size-control-lg) rounded-control border border-transparent text-label text-ink-secondary aria-selected:border-status-success-border aria-selected:bg-surface aria-selected:font-semibold aria-selected:text-link"
+            >
+              {k.label}
+            </button>
+          ))
+        }
+      </div>
+      <button
+        type="button"
+        data-stop-tour
+        hidden
+        class="mt-2 inline-flex min-h-6 items-center rounded-control px-1 text-body-sm text-link underline-offset-2 hover:text-link-hover hover:underline"
+      >
+        {copy.hero.stopTour}
+      </button>
+      <div id="seal-panel" role="tabpanel" aria-labelledby={`seal-tab-${first.key}`} class="mt-5 flex flex-wrap items-center gap-6">
+        <div class="mx-auto" data-seal-anim>
+          <SiteSeal hash={first.hash} state="intact" sizeClass="size-(--site-hero-seal)" label={copy.hero.sealIntact} id="hero-seal" />
+        </div>
+        <div class="min-w-0 flex-1 basis-48">
+          <div class="text-title-2 text-ink" data-field="name">{first.name}</div>
+          <div class="text-body text-ink-muted" data-field="type">{first.type}</div>
+          <div class="mt-3" aria-live="polite">
+            <span data-when="intact"><SamplePill tone="success"><span data-field="okLabel">{first.okLabel}</span></SamplePill></span>
+            <span data-when="broken" hidden><SamplePill tone="held"><span data-field="heldLabel">{first.heldLabel}</span></SamplePill></span>
+          </div>
+          <p data-when="broken" hidden class="mt-3 mb-0 text-body">
+            <mark class="bg-risk-high-bg px-0.5 text-risk-high-fg" data-field="mark">{first.mark}</mark>
+          </p>
+          <button
+            type="button"
+            data-toggle
+            aria-pressed="false"
+            data-label-simulate={copy.hero.simulate}
+            data-label-restore={copy.hero.restore}
+            data-seal-intact={copy.hero.sealIntact}
+            data-seal-broken={copy.hero.sealBroken}
+            hidden
+            class="mt-4 h-(--av-size-control-lg) w-full rounded-control border border-action-secondary-border bg-action-secondary-bg font-semibold text-action-secondary-fg hover:bg-action-secondary-bg-hover"
+          >
+            {copy.hero.simulate}
+          </button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  import { initSealDemo } from "../scripts/seal-demo";
+  initSealDemo();
+</script>

@@ -1,0 +1,21 @@
+---
+// Sample-data status pill: same look as StatusPill, but with the reference's marketing wording
+// (e.g. "Signed", "Held: definition changed"), which is not in StatusVocabulary.
+import { toneClasses } from "../lib/ui";
+
+interface Props {
+  tone: "success" | "info" | "held" | "danger" | "neutral";
+  id?: string;
+}
+const { tone, id } = Astro.props;
+const t = toneClasses[tone];
+---
+
+<span
+  id={id}
+  data-tone={tone}
+  class={`inline-flex items-center gap-1 rounded-pill border px-2 py-0.5 text-label font-semibold whitespace-nowrap ${t.fg} ${t.bg} ${t.border}`}
+>
+  <span aria-hidden="true" class={`size-1.5 shrink-0 rounded-pill ${t.solid}`}></span>
+  <slot />
+</span>
